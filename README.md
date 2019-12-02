@@ -4,6 +4,8 @@
 
 This is an open source project for running a crypto gift card or airdrop program.
 
+Security features will be added in over time, especially private key management.
+
 ## Features
 
 **Creation**
