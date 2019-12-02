@@ -1,5 +1,36 @@
 {
-    "posts": [{ "id": 1, "title": "json-server", "author": "typicode" }],
-    "comments": [{ "id": 1, "body": "some comment", "postId": 1 }],
-    "profile": { "name": "typicode" }
+    "codes": [
+        {
+            "id": "198293891283918",
+            "code": "hashOfCode0x29292891",
+            "claimed": false,
+            "valid": false,
+            "claimerAddress": null,
+            "createdAt": "typicode",
+            "updatedAt": "typicode"
+        }
+    ],
+    "campaign": [
+        {
+            "id": 1,
+            "assets": [
+                {
+                    "coin": 714,
+                    "token_id": "BUSD-BD1",
+                    "amount": 25000000
+                },
+                {
+                    "coin": 232,
+                    "token_id": "BNB",
+                    "amount": 1000000
+                }
+            ],
+            "quantity": 50,
+            "redeemed": 0,
+            "invalidated": 0,
+            "provider": "campaign2329.herokuapp.com",
+            "address": "0x293892819283981223",
+            "seed": "0x292893128938192839128938"
+        }
+    ]
 }
