@@ -18,8 +18,11 @@ type Storage struct {
 
 func New() (*Storage, error) {
 	u, err := url.Parse(config.Configuration.Mongo.Uri)
-	if err == nil && len(u.Path) > 0 {
-		Database = strings.Replace(u.Path, "/", "", -1)
+	if err == nil {
+		dbName := strings.Replace(u.Path, "/", "", -1)
+		if len(dbName) > 0 {
+			Database = dbName
+		}
 	}
 	mongo, err := mongodb.NewMongoDbClient(config.Configuration.Mongo.Uri)
 	if err != nil {
