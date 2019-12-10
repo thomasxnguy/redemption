@@ -6,7 +6,7 @@ This is an open source project for running a crypto gift card or airdrop program
 
 Security features will be added in over time, especially private key management.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/trustwallet/redemption/tree/pantani/initial-commit-draft)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/trustwallet/redemption)
 
 ## Features
 
