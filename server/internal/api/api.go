@@ -33,15 +33,6 @@ func addMiddleware(engine *gin.Engine) {
 	engine.Use(sg)
 }
 
-// @title TrustWallet Redeem API
-// @version 1.0
-// @description Provide a redemption API
-
-// @contact.name Trust Wallet
-// @contact.url https://t.me/wallecore
-
-// @license.name MIT License
-// @license.url https://raw.githubusercontent.com/trustwallet/redemption/master/LICENSE
 func makeRoutes(engine *gin.Engine, storage *storage.Storage) {
 	makeMetricsRoute(engine)
 	engine.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

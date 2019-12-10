@@ -37,7 +37,6 @@ start:
 ## stop: Stop development mode.
 stop: stop-server
 
-## start-api: Start API in development mode.
 start-api: stop-server
 	@echo "  >  Starting $(PROJECT_NAME) API"
 	@-$(GOBIN)/$(PROJECT_NAME) $(API_COMMAND) 2>&1 & echo $$! > $(PID_API)

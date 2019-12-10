@@ -144,8 +144,15 @@ definitions:
         type: boolean
     type: object
 info:
-  contact: {}
-  license: {}
+  contact:
+    name: Trust Wallet
+    url: https://t.me/wallecore
+  description: Redemption API for Trust Wallet
+  license:
+    name: MIT License
+    url: https://raw.githubusercontent.com/trustwallet/redemption/master/LICENSE
+  title: TrustWallet Redeem API
+  version: "1.0"
 paths:
   /metrics:
     get:
