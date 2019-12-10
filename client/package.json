@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8399",
   "dependencies": {
     "prop-types": "^15.7.2",
     "ra-data-json-server": "^3.0.2",

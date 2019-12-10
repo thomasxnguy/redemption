@@ -1,0 +1,46 @@
+{
+    "name": "TrustWallet Redemption Code",
+    "description": "Full application for redemption code for TrustWallet",
+    "keywords": [
+        "redemption",
+        "trustwallet"
+    ],
+    "website": "https://github.com/trustwallet/redemption",
+    "repository": "https://github.com/trustwallet/redemption/tree/pantani/initial-commit-draft",
+    "logo": "https://avatars0.githubusercontent.com/u/32179889",
+    "success_url": "/",
+    "formation": {
+        "web": {
+            "quantity": 1,
+            "size": "Free"
+        }
+    },
+    "addons": [
+        "logentries:le_tryit",
+        {
+            "plan": "mongolab:sandbox",
+            "as": "MONGO"
+        }
+    ],
+    "buildpacks": [
+        {
+            "url": "https://github.com/negativetwelve/heroku-buildpack-subdir"
+        }
+    ],
+    "env": {
+        "CODE_PATTERN": {
+            "description": "The pattern for genereted code.",
+            "value": "###-###-###",
+            "required": true
+        },
+        "WALLET_MNEMONIC": {
+            "description": "Mnemonic seed to referral balance.",
+            "required": true
+        },
+        "API_AUTH_TOKEN": {
+            "description": "Secret barer token for API.",
+            "required": true,
+            "generator": "secret"
+        }
+    }
+}

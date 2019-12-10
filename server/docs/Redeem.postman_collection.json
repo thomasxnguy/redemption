@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "77be3496-14d6-4cc0-b2b3-0bbc85ae33d9",
+		"name": "Redeem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "v1/hosts - Insert Host",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n    \"coin\": 714,\n    \"host\": \"testnet-dex.binance.org\"\n  }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1/hosts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"hosts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v1/hosts - Get All Hosts",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1/hosts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"hosts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v1/links - Get All Links",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1/links",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"links"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v1/link/:code - Get a specific link",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1/link/w1BT-UEpM-i6jV",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"link",
+						"w1BT-UEpM-i6jV"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v1/links/create - Create codes",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"asset\": {\n    \"coin\": 714,\n    \"assets\": [\n      {\n        \"token_id\": \"USDT.B-B7C\",\n        \"amount\": 2500\n      },\n      {\n        \"token_id\": \"BNB\",\n        \"amount\": 10000\n      }\n    ]\n  },\n  \"link_count\": 50,\n  \"provider\": \"redeem.heroku.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1/links/create",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"links",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v1/referral/redeem - Redeem a Code",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"code\": \"2sRP-rbmb-6oCl\",\n  \"observers\": [\n    {\n      \"coin\": 714,\n      \"addresses\": [\n        \"tbnb1hnzlaxaks668ptv3r5ptvsx5f6qjtezhezatkt\"\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1/referral/redeem",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"referral",
+						"redeem"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "6fe19a85-da33-4d2b-847b-2297756e56f5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3339efb1-3683-4887-9419-f8b4795a83ae",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "ad759f38-da04-42f3-9949-d40dbae37500",
+			"key": "host",
+			"value": "http://localhost:8399",
+			"type": "string"
+		},
+		{
+			"id": "7c0d139c-534b-4037-8356-8be8898d4ede",
+			"key": "auth_token",
+			"value": "test",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

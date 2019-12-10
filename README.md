@@ -6,6 +6,8 @@ This is an open source project for running a crypto gift card or airdrop program
 
 Security features will be added in over time, especially private key management.
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/trustwallet/redemption/tree/pantani/initial-commit-draft)
+
 ## Features
 
 **Creation**
@@ -15,10 +17,10 @@ Security features will be added in over time, especially private key management.
 
 **Redemption**
 
--   [ ] Redemption POST API sends cryptocurrency to the user if the redemption code is correct and valid
--   [ ] Checks that redemption codes are unclaimed
--   [ ] Race condition prevention (double-spend)
--   [ ] Tiebreaking algorithm if two users scan at the same time
+-   [x] Redemption POST API sends cryptocurrency to the user if the redemption code is correct and valid
+-   [x] Checks that redemption codes are unclaimed
+-   [x] Race condition prevention (double-spend)
+-   [x] Tiebreaking algorithm if two users scan at the same time
 
 **Dashboard and Admin**
 
@@ -27,13 +29,13 @@ Security features will be added in over time, especially private key management.
 
 **Deployment**
 
--   [ ] Heroku Autodeploy script
+-   [x] Heroku Autodeploy script
 -   [ ] `npm start` at root should start both backend and frontend (docker?)
 
 ## Structure
 
 -   [ ] Document use of [react-admin](https://github.com/marmelab/react-admin)
--   [ ] Document go backend API
+-   [x] Document go backend API
 
 ## License
 

@@ -1,0 +1,310 @@
+definitions:
+  redemption.Asset:
+    properties:
+      amount:
+        type: integer
+      error:
+        type: string
+      token_id:
+        type: string
+    type: object
+  redemption.Assets:
+    properties:
+      assets:
+        items:
+          $ref: '#/definitions/redemption.Asset'
+        type: array
+      coin:
+        type: integer
+      used:
+        type: boolean
+    type: object
+  redemption.CoinHost:
+    properties:
+      coin:
+        type: integer
+      host:
+        type: string
+    type: object
+  redemption.CoinHosts:
+    items:
+      properties:
+        coin:
+          type: integer
+        host:
+          type: string
+      type: object
+    type: array
+  redemption.CreateLinks:
+    properties:
+      asset:
+        $ref: '#/definitions/redemption.Assets'
+        type: object
+      link_count:
+        type: integer
+      provider:
+        type: string
+    type: object
+  redemption.Link:
+    properties:
+      asset:
+        $ref: '#/definitions/redemption.Assets'
+        type: object
+      code:
+        type: string
+      created_date:
+        type: string
+      expiration_date:
+        type: string
+      link:
+        type: string
+      provider:
+        type: string
+      valid:
+        type: boolean
+    type: object
+  redemption.Links:
+    items:
+      properties:
+        asset:
+          $ref: '#/definitions/redemption.Assets'
+          type: object
+        code:
+          type: string
+        created_date:
+          type: string
+        expiration_date:
+          type: string
+        link:
+          type: string
+        provider:
+          type: string
+        valid:
+          type: boolean
+      type: object
+    type: array
+  redemption.Observer:
+    properties:
+      addresses:
+        items:
+          type: string
+        type: array
+      coin:
+        type: integer
+      publicKeys:
+        items:
+          type: string
+        type: array
+    type: object
+  redemption.Observers:
+    items:
+      properties:
+        addresses:
+          items:
+            type: string
+          type: array
+        coin:
+          type: integer
+        publicKeys:
+          items:
+            type: string
+          type: array
+      type: object
+    type: array
+  redemption.Redeem:
+    properties:
+      code:
+        type: string
+      observers:
+        $ref: '#/definitions/redemption.Observers'
+        type: object
+    type: object
+  redemption.RedeemResult:
+    properties:
+      description:
+        type: string
+      error:
+        type: string
+      image_url:
+        type: string
+      result_id:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+      type:
+        type: string
+    type: object
+  redemption.Success:
+    properties:
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
+info:
+  contact: {}
+  license: {}
+paths:
+  /metrics:
+    get:
+      description: Get application metrics
+      operationId: metrics
+      summary: Get Metrics
+      tags:
+      - status
+  /status:
+    get:
+      description: Get application status
+      operationId: health
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/redemption.Success'
+      summary: Get Status
+      tags:
+      - status
+  /v1/hosts:
+    get:
+      consumes:
+      - application/json
+      description: Get a host for a specific coin
+      operationId: get_coin_host
+      parameters:
+      - default: "0"
+        description: Page
+        in: query
+        name: page
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/redemption.CoinHosts'
+      summary: Get coin host
+      tags:
+      - host
+    put:
+      consumes:
+      - application/json
+      description: Insert a host for a specific coin
+      operationId: insert_coin_host
+      parameters:
+      - description: Hosts
+        in: body
+        name: hosts
+        required: true
+        schema:
+          $ref: '#/definitions/redemption.CoinHosts'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/redemption.Success'
+      summary: Insert coin host
+      tags:
+      - host
+  /v1/link/:code:
+    get:
+      consumes:
+      - application/json
+      description: Get a specific link
+      operationId: get_link
+      parameters:
+      - description: the link code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/redemption.Link'
+      summary: Get specific link
+      tags:
+      - redeem
+  /v1/links:
+    get:
+      consumes:
+      - application/json
+      description: Get all referral links
+      operationId: get_all_links
+      parameters:
+      - default: "0"
+        description: Page
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: Provider name
+        in: query
+        name: provider
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/redemption.Links'
+      summary: Get all links
+      tags:
+      - redeem
+  /v1/links/create:
+    post:
+      consumes:
+      - application/json
+      description: Create code and links for referral from a specific asset
+      operationId: create_links
+      parameters:
+      - description: Links
+        in: body
+        name: links
+        required: true
+        schema:
+          $ref: '#/definitions/redemption.CreateLinks'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/redemption.Links'
+      summary: Create code for referral
+      tags:
+      - redeem
+  /v1/referral/redeem:
+    post:
+      consumes:
+      - application/json
+      description: Redeem the referral code
+      operationId: create_links
+      parameters:
+      - description: Redeem
+        in: body
+        name: redeem
+        required: true
+        schema:
+          $ref: '#/definitions/redemption.Redeem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/redemption.RedeemResult'
+      summary: Redeem code
+      tags:
+      - redeem
+swagger: "2.0"

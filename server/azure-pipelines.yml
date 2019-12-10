@@ -1,0 +1,46 @@
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+variables:
+  GOBIN:  '$(GOPATH)/bin' # Go binaries path
+  GOROOT: '/usr/local/go1.13' # Go installation path
+  GOPATH: '$(system.defaultWorkingDirectory)/gopath' # Go workspace path
+  modulePath: '$(GOPATH)/src/github.com/trustwallet/redemption/server' # Path to the module's code
+
+steps:
+  - script: |
+      mkdir -p '$(GOBIN)'
+      mkdir -p '$(GOPATH)/pkg'
+      mkdir -p '$(modulePath)'
+      shopt -s extglob
+      shopt -s dotglob
+      mv !(gopath) '$(modulePath)'
+      echo '##vso[task.prependpath]$(GOBIN)'
+      echo '##vso[task.prependpath]$(GOROOT)/bin'
+      echo '$(go env)'
+    displayName: 'Set up the Go workspace'
+
+  - task: CacheBeta@1
+    inputs:
+      key: 'go | "$(Agent.OS)" | **/go.mod'
+      restoreKeys: |
+        go | "$(Agent.OS)"
+        go
+      path: |
+        $(GOPATH)
+        !$(modulePath)
+    displayName: 'Cache go packages'
+
+  - script: |
+      go version
+      go get -v -t -d ./...
+    workingDirectory: '$(modulePath)'
+    displayName: 'Get dependencies'
+
+  - script: make test
+    workingDirectory: '$(modulePath)'
+    displayName: 'Run unit tests'
+
+  - script: go build -v .
+    workingDirectory: '$(modulePath)'
+    displayName: 'Build'
