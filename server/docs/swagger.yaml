@@ -173,6 +173,12 @@ paths:
       description: Get a host for a specific coin
       operationId: get_coin_host
       parameters:
+      - default: Bearer test
+        description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - default: "0"
         description: Page
         in: query
@@ -195,6 +201,12 @@ paths:
       description: Insert a host for a specific coin
       operationId: insert_coin_host
       parameters:
+      - default: Bearer test
+        description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Hosts
         in: body
         name: hosts
@@ -218,6 +230,12 @@ paths:
       description: Get a specific link
       operationId: get_link
       parameters:
+      - default: Bearer test
+        description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: the link code
         in: path
         name: code
@@ -240,6 +258,12 @@ paths:
       description: Get all referral links
       operationId: get_all_links
       parameters:
+      - default: Bearer test
+        description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - default: "0"
         description: Page
         in: query
@@ -268,6 +292,12 @@ paths:
       description: Create code and links for referral from a specific asset
       operationId: create_links
       parameters:
+      - default: Bearer test
+        description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Links
         in: body
         name: links
@@ -291,6 +321,12 @@ paths:
       description: Redeem the referral code
       operationId: create_links
       parameters:
+      - default: Bearer test
+        description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Redeem
         in: body
         name: redeem

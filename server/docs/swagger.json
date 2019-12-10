@@ -50,6 +50,14 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "Bearer test",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "default": "0",
                         "description": "Page",
                         "name": "page",
@@ -80,6 +88,14 @@
                 "summary": "Insert coin host",
                 "operationId": "insert_coin_host",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer test",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "Hosts",
                         "name": "hosts",
@@ -117,6 +133,14 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "Bearer test",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "the link code",
                         "name": "code",
                         "in": "path",
@@ -148,6 +172,14 @@
                 "summary": "Get all links",
                 "operationId": "get_all_links",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer test",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "default": "0",
@@ -190,6 +222,14 @@
                 "operationId": "create_links",
                 "parameters": [
                     {
+                        "type": "string",
+                        "default": "Bearer test",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "Links",
                         "name": "links",
                         "in": "body",
@@ -224,6 +264,14 @@
                 "summary": "Redeem code",
                 "operationId": "create_links",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer test",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "Redeem",
                         "name": "redeem",

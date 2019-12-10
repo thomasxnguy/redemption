@@ -3,6 +3,7 @@ module github.com/trustwallet/redemption/server
 go 1.13
 
 require (
+	github.com/DataDog/zstd v1.4.4 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/binance-chain/go-sdk v1.2.1
 	github.com/binance-chain/ledger-cosmos-go v0.9.9 // indirect
@@ -41,11 +42,11 @@ require (
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
 	github.com/xdg/stringprep v1.0.0 // indirect
 	github.com/zondax/ledger-go v0.11.0 // indirect
-	go.mongodb.org/mongo-driver v1.1.3
+	go.mongodb.org/mongo-driver v1.2.0
 	golang.org/x/crypto v0.0.0-20191206172530-e9b2fee46413 // indirect
 	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553 // indirect
-	golang.org/x/sys v0.0.0-20191206220618-eeba5f6aabab // indirect
-	golang.org/x/tools v0.0.0-20191209225234-22774f7dae43 // indirect
+	golang.org/x/sys v0.0.0-20191210023423-ac6580df4449 // indirect
+	golang.org/x/tools v0.0.0-20191210192857-0bd90eac9556 // indirect
 	google.golang.org/genproto v0.0.0-20191206224255-0243a4be9c8f // indirect
 	gopkg.in/go-playground/validator.v9 v9.30.2 // indirect
 	gopkg.in/yaml.v2 v2.2.7
