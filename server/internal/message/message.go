@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/trustwallet/blockatlas/pkg/errors"
+	"github.com/trustwallet/redemption/server/internal/config"
 	"github.com/trustwallet/redemption/server/pkg/redemption"
 	"gopkg.in/yaml.v2"
 	"html/template"
@@ -20,7 +21,7 @@ type message struct {
 
 func GetMessage() (message, error) {
 	var msg message
-	yamlFile, err := ioutil.ReadFile("message.yaml")
+	yamlFile, err := ioutil.ReadFile(config.Configuration.Message.File)
 	if err != nil {
 		return message{}, errors.E(err, "GetMessage read file error")
 	}

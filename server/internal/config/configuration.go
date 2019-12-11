@@ -28,9 +28,7 @@ type configuration struct {
 		Auth_Token string
 	}
 	Message struct {
-		Title       string
-		Description string
-		Image_Url   string
+		File string
 	}
 }
 
@@ -47,9 +45,7 @@ func setDefaults() {
 	viper.SetDefault("Mongo.Uri", "")
 	viper.SetDefault("Api.Mode", "release")
 	viper.SetDefault("Api.Auth_Token", "")
-	viper.SetDefault("Message.Title", "")
-	viper.SetDefault("Message.Description", "")
-	viper.SetDefault("Message.Image_Url", "")
+	viper.SetDefault("Message.File", "")
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -67,9 +63,7 @@ func InitConfig() {
 	log.Printf("MONGO_URI: %s", Configuration.Mongo.Uri)
 	log.Printf("API_MODE: %s", Configuration.Api.Mode)
 	log.Printf("API_AUTH_TOKEN: %s", Configuration.Api.Auth_Token)
-	log.Printf("MESSAGE_TITLE: %s", Configuration.Message.Title)
-	log.Printf("MESSAGE_DESCRIPTION: %s", Configuration.Message.Description)
-	log.Printf("MESSAGE_IMAGE_URL: %s", Configuration.Message.Image_Url)
+	log.Printf("MESSAGE_FILE: %s", Configuration.Message.File)
 
 	mnemonic := ""
 	if len(Configuration.Wallet.Mnemonic) > 0 {

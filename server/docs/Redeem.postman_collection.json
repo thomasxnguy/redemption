@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "77be3496-14d6-4cc0-b2b3-0bbc85ae33d9",
+		"_postman_id": "fa1f7e7b-2b1a-4696-a3c9-e3936c748a28",
 		"name": "Redeem",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -158,14 +158,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/v1/link/w1BT-UEpM-i6jV",
+					"raw": "{{host}}/v1/link/<REDEEM_CODE>",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"v1",
 						"link",
-						"w1BT-UEpM-i6jV"
+						"<REDEEM_CODE>"
 					]
 				}
 			},
@@ -256,7 +256,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "6fe19a85-da33-4d2b-847b-2297756e56f5",
+				"id": "a2dff8d2-b5c1-4366-8f4f-88e67b2fb4e8",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -266,7 +266,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "3339efb1-3683-4887-9419-f8b4795a83ae",
+				"id": "186c6d76-f620-45f2-9ebc-57b46d810304",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -276,13 +276,13 @@
 	],
 	"variable": [
 		{
-			"id": "ad759f38-da04-42f3-9949-d40dbae37500",
+			"id": "772688c6-0e81-4cab-8e43-84192f2af771",
 			"key": "host",
 			"value": "http://localhost:8399",
 			"type": "string"
 		},
 		{
-			"id": "7c0d139c-534b-4037-8356-8be8898d4ede",
+			"id": "0cd6992b-49a0-4f83-8440-7a9ac79b3602",
 			"key": "auth_token",
 			"value": "test",
 			"type": "string"
