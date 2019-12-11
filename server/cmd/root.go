@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"github.com/trustwallet/blockatlas/pkg/logger"
 	"github.com/trustwallet/redemption/server/internal/config"
 	"github.com/trustwallet/redemption/server/internal/storage"
@@ -42,6 +43,9 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.PersistentFlags().StringP("message", "m", "message.yml", "Message file")
+	viper.BindPFlag("message.file", rootCmd.PersistentFlags().Lookup("message"))
+
 	loadConf := func() { config.InitConfig() }
 	loadLogger := func() { logger.InitLogger() }
 	cobra.OnInitialize(loadConf)
