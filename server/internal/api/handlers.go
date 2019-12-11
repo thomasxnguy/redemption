@@ -236,7 +236,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		link, err := storage.GetLink(body.Code)
 		if err != nil || !link.Valid {
 			logger.Error(err)
-			ginutils.ErrorResponse(c).Message("invalid the code").Render()
+			ginutils.ErrorResponse(c).Message("invalid code").Render()
 			return
 		}
 		semaphore.Acquire()
@@ -245,7 +245,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		host, err := storage.GetHost(link.Asset.Coin)
 		if err != nil {
 			logger.Error(err)
-			ginutils.ErrorResponse(c).Message("coin without node").Render()
+			ginutils.ErrorResponse(c).Message("coin without node. You need to insert a host for this coin node").Render()
 			return
 		}
 
