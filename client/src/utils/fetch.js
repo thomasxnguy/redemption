@@ -31,7 +31,6 @@ const createHeadersFromOptions = options => {
 };
 
 export const fetchJson = (url, options) => {
-    console.log("fetchJson function");
     const requestHeaders = createHeadersFromOptions(options);
 
     return fetch(url, { ...options, headers: requestHeaders })
@@ -39,7 +38,7 @@ export const fetchJson = (url, options) => {
             response.text().then(text => ({
                 status: response.status,
                 statusText: response.statusText,
-                headers: new Map(), // TODO(Dan): Workaround to add x-total-count
+                headers: new Map(), // TODO(Dan): Workaround to add content-range. Should refactor API to include headers
                 body: text
             }))
         )
@@ -50,8 +49,7 @@ export const fetchJson = (url, options) => {
             } catch (e) {
                 // not json, no big deal
             }
-            console.log(json);
-            headers.set("x-total-count", json.length.toString());
+            headers.set("content-range", `posts 0-${json.length.toString()}/1`); // TODO(Dan): Workaround to add content-range. Refactor API to include headers
             if (status < 200 || status >= 300) {
                 return Promise.reject(
                     new HttpError(
