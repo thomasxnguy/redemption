@@ -3,21 +3,72 @@ import {
     List,
     Datagrid,
     TextField,
-    NumberField,
     BooleanField,
-    DateField
+    DateField,
+    UrlField,
+    ArrayField,
+    SingleFieldList,
+    EditButton,
+    TextInput,
+    Edit,
+    SimpleForm,
+    BooleanInput,
+    DateInput,
+    NumberInput
 } from "react-admin";
+
+const ValueField = ({ record = {}, source }) => {
+    console.log(source);
+    return "hi";
+};
 
 export const LinkList = props => (
     <List {...props}>
         <Datagrid rowClick="edit">
-            <TextField source="link" />
+            <BooleanField source="valid" />
+            <BooleanField source="asset.used" label="Redeemed?" />
             <TextField source="code" />
             <TextField source="provider" />
-            <BooleanField source="valid" />
             <DateField source="expiration_date" />
-            <DateField source="created_date" />
-            <NumberField source="asset.coin" />
+            <ArrayField source="asset.assets" label="Value">
+                <SingleFieldList>
+                    <ValueField source="asset.assets" />
+
+                    {/* Create custom component to show amount and currency */}
+                </SingleFieldList>
+            </ArrayField>
+            <UrlField source="link" />
+            <EditButton />
         </Datagrid>
     </List>
+);
+
+export const LinkEdit = props => (
+    <Edit {...props}>
+        <SimpleForm>
+            <TextInput source="link" />
+            <TextInput source="code" />
+            <TextInput source="provider" />
+            <BooleanInput source="valid" />
+            <DateInput source="expiration_date" />
+            <DateInput source="created_date" />
+            <NumberInput source="asset.coin" />
+            {/* <TextInput source="id" /> */}
+        </SimpleForm>
+    </Edit>
+);
+
+export const LinkCreate = props => (
+    <Edit {...props}>
+        <SimpleForm>
+            <TextInput source="link" />
+            <TextInput source="code" />
+            <TextInput source="provider" />
+            <BooleanInput source="valid" />
+            <DateInput source="expiration_date" />
+            <DateInput source="created_date" />
+            <NumberInput source="asset.coin" />
+            {/* <TextInput source="id" /> */}
+        </SimpleForm>
+    </Edit>
 );
