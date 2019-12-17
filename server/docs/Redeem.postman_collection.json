@@ -87,6 +87,46 @@
 			"response": []
 		},
 		{
+			"name": "v1/links/create - Create codes",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"asset\": {\n    \"coin\": 714,\n    \"assets\": [\n      {\n        \"token_id\": \"USDT.B-B7C\",\n        \"amount\": 2500\n      },\n      {\n        \"token_id\": \"BNB\",\n        \"amount\": 10000\n      }\n    ]\n  },\n  \"link_count\": 50,\n  \"provider\": \"redeem-trust.herokuapp.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1/links/create",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"links",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "v1/links - Get All Links",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -116,13 +156,19 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/v1/links",
+					"raw": "{{host}}/v1/links?page=1",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"v1",
 						"links"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -172,15 +218,15 @@
 			"response": []
 		},
 		{
-			"name": "v1/links/create - Create codes",
+			"name": "v1/link/:code - Edit a specific link",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					},
 					{
 						"key": "Authorization",
@@ -190,7 +236,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"asset\": {\n    \"coin\": 714,\n    \"assets\": [\n      {\n        \"token_id\": \"USDT.B-B7C\",\n        \"amount\": 2500\n      },\n      {\n        \"token_id\": \"BNB\",\n        \"amount\": 10000\n      }\n    ]\n  },\n  \"link_count\": 50,\n  \"provider\": \"redeem.heroku.com\"\n}",
+					"raw": "{\n  \"valid\": true,\n  \"expiration_date\": \"2020-06-25T14:53:42-03:06\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -198,14 +244,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/v1/links/create",
+					"raw": "{{host}}/v1/link/<REDEEM_CODE>",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"v1",
-						"links",
-						"create"
+						"link",
+						"<REDEEM_CODE>"
 					]
 				}
 			},
@@ -230,7 +276,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"code\": \"2sRP-rbmb-6oCl\",\n  \"observers\": [\n    {\n      \"coin\": 714,\n      \"addresses\": [\n        \"tbnb1hnzlaxaks668ptv3r5ptvsx5f6qjtezhezatkt\"\n      ]\n    }\n  ]\n}",
+					"raw": "{\n  \"code\": \"Ka3N-WMcg-uMWO\",\n  \"observers\": [\n    {\n      \"coin\": 714,\n      \"addresses\": [\n        \"tbnb1hnzlaxaks668ptv3r5ptvsx5f6qjtezhezatkt\"\n      ]\n    }\n  ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -276,13 +322,13 @@
 	],
 	"variable": [
 		{
-			"id": "772688c6-0e81-4cab-8e43-84192f2af771",
+			"id": "24f1d176-39a8-498b-8c0d-3eabab303d26",
 			"key": "host",
 			"value": "http://localhost:8399",
 			"type": "string"
 		},
 		{
-			"id": "0cd6992b-49a0-4f83-8440-7a9ac79b3602",
+			"id": "ec95ebd0-dba6-4cb3-96d6-ccccbb99eec7",
 			"key": "auth_token",
 			"value": "test",
 			"type": "string"

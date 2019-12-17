@@ -121,18 +121,18 @@ func createLinks(storage storage.Redeem) func(c *gin.Context) {
 		return nil
 	}
 	return func(c *gin.Context) {
-		var body redemption.CreateLinks
+		body := redemption.CreateLinks{LinkCount: 50}
 		if err := c.BindJSON(&body); err != nil {
 			logger.Error(err)
 			ginutils.ErrorResponse(c).Message(err.Error()).Render()
 			return
 		}
-		if body.Assets == nil || len(body.Assets.Assets) == 0 {
-			ginutils.ErrorResponse(c).Message("invalid assets").Render()
+		if len(body.Provider) == 0 || len(body.Asset.Assets) == 0 {
+			ginutils.ErrorResponse(c).Message("invalid payload").Render()
 			return
 		}
 
-		links, err := code.CreateLinks(body.LinkCount, body.Provider, *body.Assets)
+		links, err := code.CreateLinks(body.LinkCount, body.Provider, body.Asset)
 		if err != nil {
 			logger.Error(err)
 			ginutils.ErrorResponse(c).Message(err.Error()).Render()
@@ -165,7 +165,7 @@ func getAllLinks(storage storage.Redeem) func(c *gin.Context) {
 		return nil
 	}
 	return func(c *gin.Context) {
-		page := c.DefaultQuery("page", "0")
+		page := c.DefaultQuery("page", "1")
 		provider := c.Query("provider")
 		p, err := strconv.Atoi(page)
 		if err != nil {
@@ -173,7 +173,7 @@ func getAllLinks(storage storage.Redeem) func(c *gin.Context) {
 			ginutils.ErrorResponse(c).Message("failed to parse the page number").Render()
 			return
 		}
-		links, err := storage.GetLinks(p+1, provider)
+		links, err := storage.GetLinks(p, provider)
 		if err != nil {
 			logger.Error(err)
 		}
@@ -201,6 +201,49 @@ func getLink(storage storage.Redeem) func(c *gin.Context) {
 		link, err := storage.GetLink(redeemCode)
 		if err != nil {
 			logger.Error(err)
+			ginutils.ErrorResponse(c).Message(err.Error()).Render()
+			return
+		}
+		ginutils.RenderSuccess(c, link)
+	}
+}
+
+// @Summary Update specific link
+// @ID update_link
+// @Description Update a specific link
+// @Accept json
+// @Produce json
+// @Tags redeem
+// @Param Authorization header string true "Bearer Token" default(Bearer test)
+// @Param code path string true "the link code"
+// @Param link body redemption.UpdateLink true "Link"
+// @Success 200 {object} redemption.Link
+// @Error 500 {object} ginutils.ApiError
+// @Router /v1/link/:code [post]
+func updateLink(storage storage.Redeem) func(c *gin.Context) {
+	if storage == nil {
+		return nil
+	}
+	return func(c *gin.Context) {
+		redeemCode := c.Param("code")
+		link, err := storage.GetLink(redeemCode)
+		if err != nil {
+			logger.Error(err)
+			ginutils.ErrorResponse(c).Message(err.Error()).Render()
+			return
+		}
+		var body redemption.UpdateLink
+		if err := c.BindJSON(&body); err != nil {
+			logger.Error(err)
+			ginutils.ErrorResponse(c).Message(err.Error()).Render()
+			return
+		}
+		link.MergeLinks(body)
+		err = storage.UpdateLink(link)
+		if err != nil {
+			logger.Error(err)
+			ginutils.ErrorResponse(c).Message(err.Error()).Render()
+			return
 		}
 		ginutils.RenderSuccess(c, link)
 	}
@@ -234,7 +277,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 
 		// Get the code from database
 		link, err := storage.GetLink(body.Code)
-		if err != nil || !link.Valid {
+		if err != nil || !link.Valid || link.IsOutdated() {
 			logger.Error(err)
 			ginutils.ErrorResponse(c).Message("invalid code").Render()
 			return
@@ -298,7 +341,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 	}
 }
 
-func createRedeemSuccessResponse(result []string, assets []*redemption.Asset, decimals uint) redemption.RedeemResult {
+func createRedeemSuccessResponse(result []string, assets []redemption.Asset, decimals uint) redemption.RedeemResult {
 	msg, err := message.GetMessage()
 	if err != nil {
 		return redemption.RedeemResult{

@@ -40,7 +40,7 @@ func (m message) GetImage() string {
 	return m.Image
 }
 
-func (m message) GetDescription(assets []*redemption.Asset, decimals uint) string {
+func (m message) GetDescription(assets []redemption.Asset, decimals uint) string {
 	values := ""
 	for i, asset := range assets {
 		a := floatValue(asset.Amount, decimals)

@@ -164,6 +164,54 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "Update a specific link",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "redeem"
+                ],
+                "summary": "Update specific link",
+                "operationId": "update_link",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer test",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "the link code",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Link",
+                        "name": "link",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/redemption.UpdateLink"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/redemption.Link"
+                        }
+                    }
+                }
             }
         },
         "/v1/links": {
@@ -519,6 +567,17 @@
                     "type": "string"
                 },
                 "status": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "redemption.UpdateLink": {
+            "type": "object",
+            "properties": {
+                "expiration_date": {
+                    "type": "string"
+                },
+                "valid": {
                     "type": "boolean"
                 }
             }

@@ -143,6 +143,13 @@ definitions:
       status:
         type: boolean
     type: object
+  redemption.UpdateLink:
+    properties:
+      expiration_date:
+        type: string
+      valid:
+        type: boolean
+    type: object
 info:
   contact:
     name: Trust Wallet
@@ -256,6 +263,39 @@ paths:
           schema:
             $ref: '#/definitions/redemption.Link'
       summary: Get specific link
+      tags:
+      - redeem
+    post:
+      consumes:
+      - application/json
+      description: Update a specific link
+      operationId: update_link
+      parameters:
+      - default: Bearer test
+        description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: the link code
+        in: path
+        name: code
+        required: true
+        type: string
+      - description: Link
+        in: body
+        name: link
+        required: true
+        schema:
+          $ref: '#/definitions/redemption.UpdateLink'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/redemption.Link'
+      summary: Update specific link
       tags:
       - redeem
   /v1/links:

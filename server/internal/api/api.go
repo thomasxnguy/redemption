@@ -47,6 +47,7 @@ func makeRoutes(engine *gin.Engine, storage *storage.Storage) {
 	// Redeem
 	v1.GET("/links", getAllLinks(storage))
 	v1.GET("/link/:code", getLink(storage))
+	v1.POST("/link/:code", updateLink(storage))
 	v1.POST("/links/create", createLinks(storage))
 	v1.POST("/referral/redeem", redeemCode(storage))
 

@@ -2,6 +2,7 @@ package binance
 
 import (
 	sdk "github.com/binance-chain/go-sdk/client"
+	"github.com/binance-chain/go-sdk/client/transaction"
 	"github.com/binance-chain/go-sdk/common/types"
 	"github.com/binance-chain/go-sdk/keys"
 	"github.com/binance-chain/go-sdk/types/msg"
@@ -54,7 +55,7 @@ func (p *Platform) TransferAssets(addresses []string, assets redemption.Assets) 
 	// Create transfer objects
 	transfers := make([]msg.Transfer, 0)
 	for _, asset := range assets.Assets {
-		if !verifyBalance(account, *asset, len(addresses)) {
+		if !verifyBalance(account, asset, len(addresses)) {
 			return "", errors.E("main account doesn't have enough balance",
 				logger.Params{"asset": asset})
 		}
@@ -78,7 +79,7 @@ func (p *Platform) TransferAssets(addresses []string, assets redemption.Assets) 
 	}
 
 	// send multi-transfer
-	sendResult, err := p.Client.SendToken(transfers, true)
+	sendResult, err := p.Client.SendToken(transfers, true, transaction.WithMemo(config.Configuration.Transaction.Memo))
 	if err != nil || !sendResult.Ok {
 		return "", errors.E(err, "failed to send transactions", logParams, logger.Params{"result": sendResult})
 	}

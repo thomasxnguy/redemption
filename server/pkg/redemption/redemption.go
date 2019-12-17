@@ -31,19 +31,41 @@ type Link struct {
 	Valid          bool      `json:"valid" bson:"valid"`
 	ExpirationDate time.Time `json:"expiration_date" bson:"expiration_date"`
 	CreatedDate    time.Time `json:"created_date" bson:"created_date"`
-	Asset          Assets    `json:"asset" bson:"assets"`
+	Asset          Assets    `json:"asset" bson:"asset"`
+}
+
+type UpdateLink struct {
+	Valid          bool      `json:"valid"`
+	ExpirationDate time.Time `json:"expiration_date"`
+}
+
+func (l *Link) MergeLinks(n UpdateLink) {
+	if (n.ExpirationDate != time.Time{}) {
+		l.ExpirationDate = n.ExpirationDate
+	}
+	l.Valid = n.Valid
+}
+
+func (l *Link) IsOutdated() bool {
+	if (l.ExpirationDate == time.Time{}) {
+		return false
+	}
+	if l.ExpirationDate.After(time.Now()) {
+		return false
+	}
+	return true
 }
 
 type CreateLinks struct {
-	Provider  string  `json:"provider" bson:"provider"`
-	LinkCount int     `json:"link_count" bson:"link_count"`
-	Assets    *Assets `json:"asset" bson:"asset"`
+	Provider  string `json:"provider" bson:"provider"`
+	LinkCount int    `json:"link_count" bson:"link_count"`
+	Asset     Assets `json:"asset" bson:"asset"`
 }
 
 type Assets struct {
-	Coin   uint     `json:"coin" bson:"coin"`
-	Used   bool     `json:"used" bson:"used"`
-	Assets []*Asset `json:"assets" bson:"assets"`
+	Coin   uint    `json:"coin" bson:"coin"`
+	Used   bool    `json:"used" bson:"used"`
+	Assets []Asset `json:"assets" bson:"assets"`
 }
 
 type Asset struct {

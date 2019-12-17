@@ -5,22 +5,22 @@ import (
 	"testing"
 )
 
-var asset1 = &redemption.Asset{
+var asset1 = redemption.Asset{
 	Amount:  100000000,
 	TokenId: "BNB",
 }
 
-var asset2 = &redemption.Asset{
+var asset2 = redemption.Asset{
 	Amount:  2000000000,
 	TokenId: "BUSD",
 }
 
-var asset3 = &redemption.Asset{
+var asset3 = redemption.Asset{
 	Amount:  3000000,
 	TokenId: "ONE",
 }
 
-var asset4 = &redemption.Asset{
+var asset4 = redemption.Asset{
 	Amount:  556000,
 	TokenId: "XRP",
 }
@@ -34,32 +34,32 @@ func Test_message_GetDescription(t *testing.T) {
 	tests := []struct {
 		name     string
 		fields   fields
-		assets   []*redemption.Asset
+		assets   []redemption.Asset
 		decimals uint
 		want     string
 	}{
 		{
 			"test 1 coin",
 			fields{description},
-			[]*redemption.Asset{asset1},
+			[]redemption.Asset{asset1},
 			decimals,
 			"You have redeemed 1 BNB",
 		}, {
 			"test 2 coins",
 			fields{description},
-			[]*redemption.Asset{asset1, asset2},
+			[]redemption.Asset{asset1, asset2},
 			decimals,
 			"You have redeemed 1 BNB and 20 BUSD",
 		}, {
 			"test 3 coins",
 			fields{description},
-			[]*redemption.Asset{asset1, asset2, asset3},
+			[]redemption.Asset{asset1, asset2, asset3},
 			decimals,
 			"You have redeemed 1 BNB, 20 BUSD and 0.03 ONE",
 		}, {
 			"test 4 coins",
 			fields{description},
-			[]*redemption.Asset{asset1, asset2, asset3, asset4},
+			[]redemption.Asset{asset1, asset2, asset3, asset4},
 			decimals,
 			"You have redeemed 1 BNB, 20 BUSD, 0.03 ONE and 0.00556 XRP",
 		},

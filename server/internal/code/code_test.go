@@ -49,7 +49,7 @@ func Test_getUrl(t *testing.T) {
 var assets = redemption.Assets{
 	Coin: 714,
 	Used: false,
-	Assets: []*redemption.Asset{
+	Assets: []redemption.Asset{
 		{
 			Amount:  25000000,
 			TokenId: "BUSD-BD1",

@@ -29,7 +29,6 @@ func (s *Storage) UpdateLink(link *redemption.Link) error {
 
 func (s *Storage) GetLinks(page int, provider string) (redemption.Links, error) {
 	links := make(redemption.Links, 0)
-
 	query := bson.M{}
 	if len(provider) > 0 {
 		query = bson.M{"provider": provider}
