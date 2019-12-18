@@ -5,6 +5,24 @@ import { fetchJson } from "./fetch";
 const apiUrl =
     "https://cors-anywhere.herokuapp.com/redeem-trust.herokuapp.com/v1"; // TODO(Dan): Replace with dynamic URL (get URL)
 
+/**
+ * Helper method to format paths (since our API does not follow REST conventions)
+ * @param {*} resource
+ */
+const apiPath = resource => {
+    switch (resource) {
+        case "links":
+            return "link";
+            break;
+        case "hosts":
+            return "hosts";
+            break;
+        default:
+            console.error("This path is not a resource URL");
+            return;
+    }
+};
+
 const httpClient = (url, options = {}) => {
     if (!options.headers) {
         options.headers = new Headers({ Accept: "application/json" });
@@ -29,7 +47,10 @@ export default {
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
         return httpClient(url).then(({ headers, json }) => ({
-            data: json.map((resource, i) => ({ ...resource, id: i })), // TODO(Dan): API should have an id field for each entry
+            data: json.map((resource, i) => ({
+                ...resource,
+                id: resource.code
+            })), // TODO(Dan): API should have an id field for each entry
             total: parseInt(
                 headers
                     .get("content-range")
@@ -40,10 +61,16 @@ export default {
         }));
     },
 
-    getOne: (resource, params) =>
-        httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
-            data: { ...json, id: 1 } // TODO(Dan): API should have an id field for each entry
-        })),
+    getOne: (resource, params) => {
+        return httpClient(`${apiUrl}/${apiPath(resource)}/${params.id}`).then(
+            ({ json }) => ({
+                data: { ...json, id: json.code } // TODO(Dan): API should have an id field for each entry
+            }),
+            err => {
+                console.error(err);
+            }
+        );
+    },
 
     getMany: (resource, params) => {
         const query = {
@@ -80,11 +107,21 @@ export default {
         }));
     },
 
-    update: (resource, params) =>
-        httpClient(`${apiUrl}/${resource}/${params.id}`, {
-            method: "PUT",
+    update: (resource, params) => {
+        console.log(resource);
+        let method = resource == "links" ? "POST" : "PUT";
+        console.log(method);
+        return httpClient(`${apiUrl}/${apiPath(resource)}/${params.id}`, {
+            method: method,
             body: JSON.stringify(params.data)
-        }).then(({ json }) => ({ data: { ...json, id: 1 } })), // TODO(Dan): API should have an id field for each entry
+        }).then(
+            ({ json }) => {
+                console.log(json);
+                return { data: { ...json, id: 1 } }; // TODO(Dan): API should have an id field for each entry
+            },
+            err => console.error(err)
+        );
+    },
 
     updateMany: (resource, params) => {
         const query = {
@@ -98,10 +135,10 @@ export default {
 
     create: (resource, params) =>
         httpClient(`${apiUrl}/${resource}`, {
-            method: "POST",
+            method: "POST", // TODO(Dan): need to change for hosts
             body: JSON.stringify(params.data)
         }).then(({ json }) => ({
-            data: { ...params.data, id: json.id } // TODO(Dan): API should return json.id
+            data: { ...params.data, id: json.id } // TODO(Dan): need to change for links (codes) and hosts (?)
         })),
 
     delete: (resource, params) =>

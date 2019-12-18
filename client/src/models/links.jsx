@@ -21,12 +21,21 @@ import { FileCopy } from "@material-ui/icons";
 
 const AssetField = ({ record = {}, source }) => {
     const asset = `${record.token_id} - ${record.amount}`;
-    return <Chip label={asset} variant="outlined" color="secondary" />;
+    const variant = record.token_id === "BNB" ? "outlined" : "default";
+    const color = record.token_id === "BNB" ? "default" : "secondary";
+    return (
+        <Chip
+            label={asset}
+            variant={variant}
+            size="small"
+            color={color}
+            clickable={false}
+        />
+    );
 };
 
 const CopyLinkField = ({ record = {}, source }) => {
     const { link } = record;
-
     const copyToClipboard = event => {
         navigator.clipboard.writeText(link).then(
             function() {
@@ -37,7 +46,6 @@ const CopyLinkField = ({ record = {}, source }) => {
             }
         );
     };
-
     return (
         <Button
             variant="contained"
@@ -55,10 +63,11 @@ export const LinkList = props => (
         <Datagrid>
             <BooleanField source="valid" />
             <BooleanField source="asset.used" label="Redeemed?" />
-            <TextField source="code" />
-            <TextField source="provider" />
+            <TextField source="id" label="code" />
             <DateField source="expiration_date" />
             <ArrayField source="asset.assets" label="Value">
+                {/* TODO(Dan): Replace SingleFieldList with custom iterator to remove orphaned links */}
+                {/* See https://marmelab.com/react-admin/List.html#using-a-custom-iterator */}
                 <SingleFieldList>
                     <AssetField source="token_id" />
                 </SingleFieldList>
@@ -79,7 +88,7 @@ export const LinkEdit = props => (
             <DateInput source="expiration_date" />
             <DateInput source="created_date" />
             <NumberInput source="asset.coin" />
-            {/* <TextInput source="id" /> */}
+            <TextInput source="id" />
         </SimpleForm>
     </Edit>
 );
@@ -94,7 +103,7 @@ export const LinkCreate = props => (
             <DateInput source="expiration_date" />
             <DateInput source="created_date" />
             <NumberInput source="asset.coin" />
-            {/* <TextInput source="id" /> */}
+            <TextInput source="id" />
         </SimpleForm>
     </Edit>
 );
