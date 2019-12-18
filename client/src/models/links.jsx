@@ -14,12 +14,15 @@ import {
     SimpleForm,
     BooleanInput,
     DateInput,
-    NumberInput
+    NumberInput,
+    ShowButton,
+    ChipField
 } from "react-admin";
+import { Chip } from "@material-ui/core";
 
-const ValueField = ({ record = {}, source }) => {
-    console.log(source);
-    return "hi";
+const AssetField = ({ record = {}, source }) => {
+    const asset = `${record.token_id} - ${record.amount}`;
+    return <Chip label={asset} variant="outlined" color="secondary" />;
 };
 
 export const LinkList = props => (
@@ -32,13 +35,13 @@ export const LinkList = props => (
             <DateField source="expiration_date" />
             <ArrayField source="asset.assets" label="Value">
                 <SingleFieldList>
-                    <ValueField source="asset.assets" />
-
-                    {/* Create custom component to show amount and currency */}
+                    <AssetField source="token_id" />
+                    {/* TODO(Dan): Create custom component to show amount and currency */}
                 </SingleFieldList>
             </ArrayField>
             <UrlField source="link" />
             <EditButton />
+            <ShowButton />
         </Datagrid>
     </List>
 );

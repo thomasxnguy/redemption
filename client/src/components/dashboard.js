@@ -12,8 +12,8 @@ export default class extends React.Component {
         bearerToken: "Default Value"
     };
 
-    async componentDidMount() {
-        const bearerToken = await localStorage.getItem("bearerToken");
+    componentDidMount() {
+        const bearerToken = localStorage.getItem("bearerToken");
         this.setState({ bearerToken });
     }
 
