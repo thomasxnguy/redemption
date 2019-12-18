@@ -5,7 +5,6 @@ import {
     TextField,
     BooleanField,
     DateField,
-    UrlField,
     ArrayField,
     SingleFieldList,
     EditButton,
@@ -15,19 +14,45 @@ import {
     BooleanInput,
     DateInput,
     NumberInput,
-    ShowButton,
-    ChipField
+    ShowButton
 } from "react-admin";
-import { Chip } from "@material-ui/core";
+import { Chip, Button } from "@material-ui/core";
+import { FileCopy } from "@material-ui/icons";
 
 const AssetField = ({ record = {}, source }) => {
     const asset = `${record.token_id} - ${record.amount}`;
     return <Chip label={asset} variant="outlined" color="secondary" />;
 };
 
+const CopyLinkField = ({ record = {}, source }) => {
+    const { link } = record;
+
+    const copyToClipboard = event => {
+        navigator.clipboard.writeText(link).then(
+            function() {
+                console.log("Link copied to clipboard!");
+            },
+            function(err) {
+                console.error("Error: could not copy link to clipboard ", err);
+            }
+        );
+    };
+
+    return (
+        <Button
+            variant="contained"
+            color="primary"
+            endIcon={<FileCopy />}
+            onClick={copyToClipboard}
+        >
+            Copy
+        </Button>
+    );
+};
+
 export const LinkList = props => (
     <List {...props}>
-        <Datagrid rowClick="edit">
+        <Datagrid>
             <BooleanField source="valid" />
             <BooleanField source="asset.used" label="Redeemed?" />
             <TextField source="code" />
@@ -36,12 +61,10 @@ export const LinkList = props => (
             <ArrayField source="asset.assets" label="Value">
                 <SingleFieldList>
                     <AssetField source="token_id" />
-                    {/* TODO(Dan): Create custom component to show amount and currency */}
                 </SingleFieldList>
             </ArrayField>
-            <UrlField source="link" />
+            <CopyLinkField source="link" />
             <EditButton />
-            <ShowButton />
         </Datagrid>
     </List>
 );
