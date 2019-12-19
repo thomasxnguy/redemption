@@ -271,7 +271,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		var body redemption.Redeem
 		if err := c.BindJSON(&body); err != nil {
 			logger.Error(err)
-			ginutils.ErrorResponse(c).Message(err.Error()).Render()
+			ginutils.RenderSuccess(c, createRedeemErrorResponse(err.Error()))
 			return
 		}
 
@@ -279,7 +279,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		link, err := storage.GetLink(body.Code)
 		if err != nil || !link.Valid || link.IsOutdated() {
 			logger.Error(err)
-			ginutils.ErrorResponse(c).Message("invalid code").Render()
+			ginutils.RenderSuccess(c, createRedeemErrorResponse("Invalid code"))
 			return
 		}
 		semaphore.Acquire()
@@ -288,15 +288,15 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		host, err := storage.GetHost(link.Asset.Coin)
 		if err != nil {
 			logger.Error(err)
-			ginutils.ErrorResponse(c).Message("coin without node. You need to insert a host for this coin node").Render()
+			ginutils.RenderSuccess(c, createRedeemErrorResponse("Coin without node. You need to insert a host for this coin node"))
 			return
 		}
 
 		// Get asset platform
 		p, err := platform.GetTxPlatform(link.Asset.Coin, host)
 		if err != nil {
-			logger.Error(err, "failed to initialize platform API")
-			ginutils.ErrorResponse(c).Message(err.Error()).Render()
+			logger.Error(err, "Failed to initialize platform API")
+			ginutils.RenderSuccess(c, createRedeemErrorResponse(err.Error()))
 			return
 		}
 
@@ -306,13 +306,13 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		err = storage.UpdateLink(link)
 		if err != nil {
 			logger.Error(err)
-			ginutils.ErrorResponse(c).Message("cannot invalidate code").Render()
+			ginutils.RenderSuccess(c, createRedeemErrorResponse("CCannot invalidate code"))
 			return
 		}
 
 		// Verify asset is used
 		if link.Asset.Used {
-			ginutils.ErrorResponse(c).Message("asset already used").Render()
+			ginutils.RenderSuccess(c, createRedeemErrorResponse("Asset already used"))
 			return
 		}
 		link.Asset.Used = true
@@ -335,7 +335,6 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		err = storage.UpdateLink(link)
 		if err != nil {
 			logger.Error(err)
-			ginutils.ErrorResponse(c).Message("cannot invalidate the asset").Render()
 			return
 		}
 	}
@@ -355,4 +354,17 @@ func createRedeemSuccessResponse(result []string, assets []redemption.Asset, dec
 		ImageURL:    msg.GetImage(),
 		ResultId:    result,
 	}
+}
+
+func createRedeemErrorResponse(description string) redemption.RedeemResult {
+	result := redemption.RedeemResult{
+		Type:        redemption.RedeemResultTypeError,
+		Title:       "Failed Redeem",
+		Description: description,
+	}
+	msg, err := message.GetMessage()
+	if err == nil {
+		result.ImageURL = msg.GetImage()
+	}
+	return result
 }
