@@ -27,9 +27,16 @@ func Provide(storage *storage.Storage) {
 	}
 }
 
+func reverseProxy(c *gin.Context) {
+	c.Request.Header.Del("Forwarded")
+	c.Request.Header.Del("X-Forwarded-Proto")
+	c.Request.Header.Del("X-Forwarded-Host")
+	c.Request.Header.Del("X-Forwarded-For")
+}
+
 func addMiddleware(engine *gin.Engine) {
 	sg := sentrygin.New(sentrygin.Options{})
-	engine.Use(sg)
+	engine.Use(reverseProxy, sg)
 }
 
 func makeRoutes(engine *gin.Engine, storage *storage.Storage) {
