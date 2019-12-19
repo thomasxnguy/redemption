@@ -38,7 +38,7 @@ func makeRoutes(engine *gin.Engine, storage *storage.Storage) {
 	engine.GET("/status", statusHandler)
 
 	// Serve frontend static files
-	engine.Use(static.Serve("/", static.LocalFile("./../client/build", true)))
+	engine.Use(static.Serve("/", static.LocalFile(config.Configuration.Client.Path, true)))
 
 	v1 := engine.Group("/v1")
 	v1.Use(ginutils.TokenAuthMiddleware(config.Configuration.Api.Auth_Token))

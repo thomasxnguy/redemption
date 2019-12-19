@@ -44,7 +44,15 @@ func Execute() {
 
 func init() {
 	rootCmd.PersistentFlags().StringP("message", "m", "message.yml", "Message file")
-	viper.BindPFlag("message.file", rootCmd.PersistentFlags().Lookup("message"))
+	err := viper.BindPFlag("message.file", rootCmd.PersistentFlags().Lookup("message"))
+	if err != nil {
+		logger.Error(err)
+	}
+	rootCmd.PersistentFlags().StringP("client", "c", "./../client/build", "Path to client folder")
+	err = viper.BindPFlag("client.path", rootCmd.PersistentFlags().Lookup("message"))
+	if err != nil {
+		logger.Error(err)
+	}
 
 	loadConf := func() { config.InitConfig() }
 	loadLogger := func() { logger.InitLogger() }

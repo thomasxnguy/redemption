@@ -14,6 +14,9 @@ type configuration struct {
 		Prefix  string
 		Pattern string
 	}
+	Client struct {
+		Path string
+	}
 	Link struct {
 		Url string
 	}
@@ -43,6 +46,7 @@ func setDefaults() {
 	viper.SetDefault("Port", "8399")
 	viper.SetDefault("Code.Prefix", "")
 	viper.SetDefault("Code.Pattern", "####-####-####")
+	viper.SetDefault("Client.Path", "./../client/build")
 	viper.SetDefault("Link.Url", "https://links.trustwallet.com/redeem?code={{.Code}}&provider={{.Provider}}")
 	viper.SetDefault("Wallet.Mnemonic", "")
 	viper.SetDefault("Mongo.Uri", "")
@@ -63,6 +67,7 @@ func InitConfig() {
 	log.Printf("API_PORT: %s", Configuration.Port)
 	log.Printf("CODE_PREFIX: %s", Configuration.Code.Prefix)
 	log.Printf("CODE_PATTERN: %s", Configuration.Code.Pattern)
+	log.Printf("CLIENT_PATH: %s", Configuration.Client.Path)
 	log.Printf("LINK_URL: %s", Configuration.Link.Url)
 	log.Printf("WALLET_MNEMONIC: %s", Configuration.Wallet.Mnemonic)
 	log.Printf("MONGO_URI: %s", Configuration.Mongo.Uri)
