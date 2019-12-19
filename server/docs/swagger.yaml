@@ -187,7 +187,7 @@ paths:
       description: Get a host for a specific coin
       operationId: get_coin_host
       parameters:
-      - default: Bearer test
+      - default: Bearer Default Value
         description: Bearer Token
         in: header
         name: Authorization
@@ -215,7 +215,7 @@ paths:
       description: Insert a host for a specific coin
       operationId: insert_coin_host
       parameters:
-      - default: Bearer test
+      - default: Bearer Default Value
         description: Bearer Token
         in: header
         name: Authorization
@@ -244,7 +244,7 @@ paths:
       description: Get a specific link
       operationId: get_link
       parameters:
-      - default: Bearer test
+      - default: Bearer Default Value
         description: Bearer Token
         in: header
         name: Authorization
@@ -271,7 +271,7 @@ paths:
       description: Update a specific link
       operationId: update_link
       parameters:
-      - default: Bearer test
+      - default: Bearer Default Value
         description: Bearer Token
         in: header
         name: Authorization
@@ -305,7 +305,7 @@ paths:
       description: Get all referral links
       operationId: get_all_links
       parameters:
-      - default: Bearer test
+      - default: Bearer Default Value
         description: Bearer Token
         in: header
         name: Authorization
@@ -339,7 +339,7 @@ paths:
       description: Create code and links for referral from a specific asset
       operationId: create_links
       parameters:
-      - default: Bearer test
+      - default: Bearer Default Value
         description: Bearer Token
         in: header
         name: Authorization
@@ -368,7 +368,7 @@ paths:
       description: Redeem the referral code
       operationId: create_links
       parameters:
-      - default: Bearer test
+      - default: Bearer Default Value
         description: Bearer Token
         in: header
         name: Authorization

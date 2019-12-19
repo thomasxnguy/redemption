@@ -4,14 +4,13 @@ import (
 	sentrygin "github.com/getsentry/sentry-go/gin"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/trustwallet/blockatlas/pkg/ginutils"
 	"github.com/trustwallet/blockatlas/pkg/logger"
+	_ "github.com/trustwallet/redemption/server/docs"
 	"github.com/trustwallet/redemption/server/internal/config"
 	"github.com/trustwallet/redemption/server/internal/storage"
-
-	swaggerFiles "github.com/swaggo/files"
-	_ "github.com/trustwallet/redemption/server/docs"
 )
 
 func Provide(storage *storage.Storage) {
@@ -39,7 +38,7 @@ func makeRoutes(engine *gin.Engine, storage *storage.Storage) {
 	engine.GET("/status", statusHandler)
 
 	// Serve frontend static files
-	engine.Use(static.Serve("/", static.LocalFile("../client/build", true)))
+	engine.Use(static.Serve("/", static.LocalFile("./../client/build", true)))
 
 	v1 := engine.Group("/v1")
 	v1.Use(ginutils.TokenAuthMiddleware(config.Configuration.Api.Auth_Token))

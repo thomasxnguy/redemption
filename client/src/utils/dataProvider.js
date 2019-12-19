@@ -2,8 +2,7 @@ import { fetchUtils } from "react-admin";
 import { stringify } from "query-string";
 import { fetchJson } from "./fetch";
 
-const apiUrl =
-    "https://cors-anywhere.herokuapp.com/redeem-trust.herokuapp.com/v1"; // TODO(Dan): Replace with dynamic URL (get URL)
+const apiUrl = "/v1"; // TODO(Dan): Replace with dynamic URL (get URL)
 
 /**
  * Helper method to format paths (since our API does not follow REST conventions)

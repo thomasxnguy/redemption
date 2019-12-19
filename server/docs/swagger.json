@@ -59,7 +59,7 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "default": "Bearer test",
+                        "default": "Bearer Default Value",
                         "description": "Bearer Token",
                         "name": "Authorization",
                         "in": "header",
@@ -99,7 +99,7 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "default": "Bearer test",
+                        "default": "Bearer Default Value",
                         "description": "Bearer Token",
                         "name": "Authorization",
                         "in": "header",
@@ -142,7 +142,7 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "default": "Bearer test",
+                        "default": "Bearer Default Value",
                         "description": "Bearer Token",
                         "name": "Authorization",
                         "in": "header",
@@ -181,7 +181,7 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "default": "Bearer test",
+                        "default": "Bearer Default Value",
                         "description": "Bearer Token",
                         "name": "Authorization",
                         "in": "header",
@@ -231,7 +231,7 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "default": "Bearer test",
+                        "default": "Bearer Default Value",
                         "description": "Bearer Token",
                         "name": "Authorization",
                         "in": "header",
@@ -280,7 +280,7 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "default": "Bearer test",
+                        "default": "Bearer Default Value",
                         "description": "Bearer Token",
                         "name": "Authorization",
                         "in": "header",
@@ -323,7 +323,7 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "default": "Bearer test",
+                        "default": "Bearer Default Value",
                         "description": "Bearer Token",
                         "name": "Authorization",
                         "in": "header",

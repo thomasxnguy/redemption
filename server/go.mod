@@ -7,6 +7,7 @@ require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/binance-chain/go-sdk v1.2.1
 	github.com/binance-chain/ledger-cosmos-go v0.9.9 // indirect
+	github.com/btcsuite/btcutil v0.0.0-20191219182022-e17c9730c422 // indirect
 	github.com/cespare/xxhash/v2 v2.1.1 // indirect
 	github.com/chenjiandongx/ginprom v0.0.0-20191022035802-6f3da3c84986
 	github.com/getsentry/sentry-go v0.3.1
@@ -25,6 +26,7 @@ require (
 	github.com/prometheus/client_model v0.0.0-20191202183732-d1d2010b5bee // indirect
 	github.com/prometheus/procfs v0.0.8 // indirect
 	github.com/spf13/afero v1.2.2 // indirect
+	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
@@ -33,7 +35,7 @@ require (
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.6.3
-	github.com/tecbot/gorocksdb v0.0.0-20191122205208-eb0a0d0d32b3 // indirect
+	github.com/tecbot/gorocksdb v0.0.0-20191217155057-f0fad39f321c // indirect
 	github.com/tendermint/btcd v0.1.1 // indirect
 	github.com/tendermint/go-amino v0.15.1 // indirect
 	github.com/tendermint/tendermint v0.32.8 // indirect
@@ -46,9 +48,10 @@ require (
 	go.mongodb.org/mongo-driver v1.2.0
 	golang.org/x/crypto v0.0.0-20191206172530-e9b2fee46413 // indirect
 	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553 // indirect
-	golang.org/x/sys v0.0.0-20191210023423-ac6580df4449 // indirect
-	golang.org/x/tools v0.0.0-20191217141249-0b43622770f0 // indirect
+	golang.org/x/sys v0.0.0-20191218084908-4a24b4065292 // indirect
+	golang.org/x/tools v0.0.0-20191219181913-2ad5dca7a53c // indirect
 	google.golang.org/genproto v0.0.0-20191216205247-b31c10ee225f // indirect
+	google.golang.org/grpc v1.26.0 // indirect
 	gopkg.in/go-playground/validator.v9 v9.30.2 // indirect
 	gopkg.in/yaml.v2 v2.2.7
 )

@@ -31,7 +31,7 @@
         "CODE_PATTERN": {
             "description": "The pattern for genereted code.",
             "value": "###-###-###",
-            "required": true
+            "required": false
         },
         "WALLET_MNEMONIC": {
             "description": "Mnemonic seed to referral balance.",
