@@ -30,11 +30,11 @@ func Test_getUrl(t *testing.T) {
 		{
 			"test 1",
 			args{"trust-VLQ-lEt-cRr", "redeem.trustwallet.com"},
-			"https://links.trustwallet.com/redeem?code=trust-VLQ-lEt-cRr&provider=redeem.trustwallet.com",
+			"https://redeem.trustwallet.com/redeem?code=trust-VLQ-lEt-cRr&provider=redeem.trustwallet.com",
 		}, {
 			"test 2",
 			args{"Ha4-let-TYr", "redeem.binance.com"},
-			"https://links.trustwallet.com/redeem?code=Ha4-let-TYr&provider=redeem.binance.com",
+			"https://redeem.trustwallet.com/redeem?code=Ha4-let-TYr&provider=redeem.binance.com",
 		},
 	}
 	for _, tt := range tests {
