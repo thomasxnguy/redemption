@@ -105,7 +105,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"asset\": {\n    \"coin\": 714,\n    \"assets\": [\n      {\n        \"token_id\": \"USDT.B-B7C\",\n        \"amount\": 2500\n      },\n      {\n        \"token_id\": \"BNB\",\n        \"amount\": 10000\n      }\n    ]\n  },\n  \"link_count\": 50,\n  \"provider\": \"redeem-trust.herokuapp.com\"\n}",
+					"raw": "{\n  \"asset\": {\n    \"coin\": 714,\n    \"assets\": [\n      {\n        \"token_id\": \"USDT.B-B7C\",\n        \"amount\": 2500\n      },\n      {\n        \"token_id\": \"BNB\",\n        \"amount\": 10000\n      }\n    ]\n  },\n  \"link_count\": 50,\n  \"provider\": \"trust-redeem.herokuapp.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -276,7 +276,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"code\": \"Ka3N-WMcg-uMWO\",\n  \"observers\": [\n    {\n      \"coin\": 714,\n      \"addresses\": [\n        \"tbnb1hnzlaxaks668ptv3r5ptvsx5f6qjtezhezatkt\"\n      ]\n    }\n  ]\n}",
+					"raw": "{\n  \"code\": \"Y64i-FLFn-CcXU\",\n  \"observers\": [\n    {\n      \"coin\": 714,\n      \"addresses\": [\n        \"tbnb1hnzlaxaks668ptv3r5ptvsx5f6qjtezhezatkt\"\n      ]\n    }\n  ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -322,15 +322,15 @@
 	],
 	"variable": [
 		{
-			"id": "24f1d176-39a8-498b-8c0d-3eabab303d26",
+			"id": "26e21fd0-75ba-483e-a97a-7edb5d9fb2fd",
 			"key": "host",
 			"value": "http://localhost:8399",
 			"type": "string"
 		},
 		{
-			"id": "ec95ebd0-dba6-4cb3-96d6-ccccbb99eec7",
+			"id": "a39926e8-1013-478f-b218-b353dc668b89",
 			"key": "auth_token",
-			"value": "test",
+			"value": "Default Value",
 			"type": "string"
 		}
 	],
