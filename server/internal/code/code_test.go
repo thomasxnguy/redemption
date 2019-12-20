@@ -9,7 +9,7 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	_ = os.Setenv("LINK_URL", "https://links.trustwallet.com/redeem?code={{.Code}}&provider={{.Provider}}")
+	_ = os.Setenv("LINK_URL", "https://redeem.trustwallet.com/redeem?code={{.Code}}&provider={{.Provider}}")
 	_ = os.Setenv("CODE_PREFIX", "trust-")
 	_ = os.Setenv("CODE_PATTERN", "####-####-####")
 	_ = os.Setenv("CODE_CHARSET", "0123456789")
