@@ -14,7 +14,13 @@ import {
     BooleanInput,
     DateInput,
     NumberInput,
-    ShowButton
+    Create,
+    ArrayInput,
+    SimpleFormIterator,
+    ReferenceField,
+    ChipField,
+    ReferenceInput,
+    SelectInput
 } from "react-admin";
 import { Chip, Button } from "@material-ui/core";
 import { FileCopy } from "@material-ui/icons";
@@ -65,9 +71,10 @@ export const LinkList = props => (
             <BooleanField source="asset.used" label="Redeemed?" />
             <TextField source="id" label="code" />
             <DateField source="expiration_date" />
+            <ReferenceField source="asset.coin" reference="hosts">
+                <ChipField source="coin" />
+            </ReferenceField>
             <ArrayField source="asset.assets" label="Value">
-                {/* TODO(Dan): Replace SingleFieldList with custom iterator to remove orphaned links */}
-                {/* See https://marmelab.com/react-admin/List.html#using-a-custom-iterator */}
                 <SingleFieldList>
                     <AssetField source="token_id" />
                 </SingleFieldList>
@@ -88,22 +95,31 @@ export const LinkEdit = props => (
             <DateInput source="expiration_date" />
             <DateInput source="created_date" />
             <NumberInput source="asset.coin" />
-            <TextInput source="id" />
         </SimpleForm>
     </Edit>
 );
 
 export const LinkCreate = props => (
-    <Edit {...props}>
+    <Create title="Create Links" {...props}>
         <SimpleForm>
-            <TextInput source="link" />
-            <TextInput source="code" />
-            <TextInput source="provider" />
-            <BooleanInput source="valid" />
-            <DateInput source="expiration_date" />
-            <DateInput source="created_date" />
-            <NumberInput source="asset.coin" />
-            <TextInput source="id" />
+            <NumberInput
+                source="link_count"
+                label="Number of links to create"
+            />
+            <TextInput source="provider" label="Provider" />
+            <ReferenceInput
+                label="Coin ID"
+                source="asset.coin"
+                reference="hosts"
+            >
+                <SelectInput optionText="host" />
+            </ReferenceInput>
+            <ArrayInput source="asset.assets" label="Gift Card Amounts">
+                <SimpleFormIterator>
+                    <TextInput source="token_id" label="Token ID (e.g. BNB)" />
+                    <NumberInput source="amount" label="Amount" />
+                </SimpleFormIterator>
+            </ArrayInput>
         </SimpleForm>
-    </Edit>
+    </Create>
 );

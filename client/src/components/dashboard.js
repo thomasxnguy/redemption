@@ -8,9 +8,8 @@ import {
 } from "@material-ui/core";
 
 export default class extends React.Component {
-    // TODO how get the bearerToken from env var API_AUTH_TOKEN
     state = {
-        bearerToken: process.env.API_AUTH_TOKEN || "Default Value"
+        bearerToken: ""
     };
 
     componentDidMount() {

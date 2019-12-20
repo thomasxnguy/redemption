@@ -12,10 +12,24 @@ const apiPath = resource => {
     switch (resource) {
         case "links":
             return "link";
-            break;
         case "hosts":
             return "hosts";
-            break;
+        default:
+            console.error("This path is not a resource URL");
+            return;
+    }
+};
+
+/**
+ * Helper method to format paths (since our API does not follow REST conventions)
+ * @param {*} resource
+ */
+const resourceId = resource => {
+    switch (resource) {
+        case "links":
+            return "code";
+        case "hosts":
+            return "coin";
         default:
             console.error("This path is not a resource URL");
             return;
@@ -44,12 +58,13 @@ export default {
             filter: JSON.stringify(params.filter)
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
+        const id = resourceId(resource);
 
         return httpClient(url).then(({ headers, json }) => ({
             data: json.map((resource, i) => ({
                 ...resource,
-                id: resource.code
-            })), // TODO(Dan): API should have an id field for each entry
+                id: resource[id]
+            })),
             total: parseInt(
                 headers
                     .get("content-range")
@@ -61,9 +76,10 @@ export default {
     },
 
     getOne: (resource, params) => {
+        const id = resourceId(resource);
         return httpClient(`${apiUrl}/${apiPath(resource)}/${params.id}`).then(
             ({ json }) => ({
-                data: { ...json, id: json.code } // TODO(Dan): API should have an id field for each entry
+                data: { ...json, id: json[id] }
             }),
             err => {
                 console.error(err);
@@ -76,8 +92,9 @@ export default {
             filter: JSON.stringify({ id: params.ids })
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
+        const id = resourceId(resource);
         return httpClient(url).then(({ json }) => ({
-            data: json.map((resource, i) => ({ ...resource, id: i })) // TODO(Dan): API should have an id field for each entry
+            data: json.map((resource, i) => ({ ...resource, id: resource[id] }))
         }));
     },
 
@@ -107,16 +124,14 @@ export default {
     },
 
     update: (resource, params) => {
-        console.log(resource);
-        let method = resource == "links" ? "POST" : "PUT";
-        console.log(method);
+        const method = resource === "links" ? "POST" : "PUT";
+        const id = resourceId(resource);
         return httpClient(`${apiUrl}/${apiPath(resource)}/${params.id}`, {
             method: method,
             body: JSON.stringify(params.data)
         }).then(
             ({ json }) => {
-                console.log(json);
-                return { data: { ...json, id: 1 } }; // TODO(Dan): API should have an id field for each entry
+                return { data: { ...json, id: json[id] } };
             },
             err => console.error(err)
         );
@@ -132,13 +147,26 @@ export default {
         }).then(({ json }) => ({ data: json }));
     },
 
-    create: (resource, params) =>
-        httpClient(`${apiUrl}/${resource}`, {
-            method: "POST", // TODO(Dan): need to change for hosts
-            body: JSON.stringify(params.data)
-        }).then(({ json }) => ({
-            data: { ...params.data, id: json.id } // TODO(Dan): need to change for links (codes) and hosts (?)
-        })),
+    create: (resource, params) => {
+        const createPath = resource === "links" ? `/create` : ""; // Note: Because of peculiarity of API paths
+        const method = resource === "hosts" ? "PUT" : "POST"; // Note: Because peculiarity of API
+        const body = resource === "hosts" ? [params.data] : params.data; // NOTE: Because peculiarity of API
+        return httpClient(`${apiUrl}/${resource}${createPath}`, {
+            method: method,
+            body: JSON.stringify(body)
+        }).then(
+            ({ json }) => {
+                const id =
+                    resource === "links"
+                        ? json[0].code // Note: Hackaround to get 1st link's code
+                        : Math.round(Math.random() * 9999999999); // Note: Hackaround to assign unique ID for new host
+                return {
+                    data: { ...params.data, id }
+                };
+            },
+            err => console.error(err)
+        );
+    },
 
     delete: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
