@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"github.com/chenjiandongx/ginprom"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -13,6 +14,7 @@ import (
 	"github.com/trustwallet/redemption/server/internal/storage"
 	"github.com/trustwallet/redemption/server/pkg/redemption"
 	"github.com/trustwallet/redemption/server/platform"
+	"net/http"
 	"strconv"
 )
 
@@ -23,7 +25,7 @@ import (
 // @Success 200 {object} redemption.Success
 // @Router /status [get]
 func statusHandler(c *gin.Context) {
-	ginutils.RenderSuccess(c, redemption.Success{Status: true})
+	RenderSuccess(c, redemption.Success{Status: true})
 }
 
 // @Summary Get Metrics
@@ -70,7 +72,7 @@ func insertCoinHosts(storage storage.Host) func(c *gin.Context) {
 			ginutils.ErrorResponse(c).Message(err.Error()).Render()
 			return
 		}
-		ginutils.RenderSuccess(c, redemption.Success{Status: true})
+		RenderSuccess(c, redemption.Success{Status: true})
 	}
 }
 
@@ -101,7 +103,7 @@ func getCoinHosts(storage storage.Host) func(c *gin.Context) {
 		if err != nil {
 			logger.Error(err)
 		}
-		ginutils.RenderSuccess(c, links)
+		RenderSuccess(c, links)
 	}
 }
 
@@ -144,7 +146,7 @@ func createLinks(storage storage.Redeem) func(c *gin.Context) {
 			ginutils.ErrorResponse(c).Message(err.Error()).Render()
 			return
 		}
-		ginutils.RenderSuccess(c, links)
+		RenderSuccess(c, links)
 	}
 }
 
@@ -177,7 +179,7 @@ func getAllLinks(storage storage.Redeem) func(c *gin.Context) {
 		if err != nil {
 			logger.Error(err)
 		}
-		ginutils.RenderSuccess(c, links)
+		RenderSuccess(c, links)
 	}
 }
 
@@ -204,7 +206,7 @@ func getLink(storage storage.Redeem) func(c *gin.Context) {
 			ginutils.ErrorResponse(c).Message(err.Error()).Render()
 			return
 		}
-		ginutils.RenderSuccess(c, link)
+		RenderSuccess(c, link)
 	}
 }
 
@@ -245,7 +247,7 @@ func updateLink(storage storage.Redeem) func(c *gin.Context) {
 			ginutils.ErrorResponse(c).Message(err.Error()).Render()
 			return
 		}
-		ginutils.RenderSuccess(c, link)
+		RenderSuccess(c, link)
 	}
 }
 
@@ -271,7 +273,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		var body redemption.Redeem
 		if err := c.BindJSON(&body); err != nil {
 			logger.Error(err)
-			ginutils.RenderSuccess(c, createRedeemErrorResponse(err.Error()))
+			RenderSuccess(c, createRedeemErrorResponse(err.Error()))
 			return
 		}
 
@@ -279,7 +281,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		link, err := storage.GetLink(body.Code)
 		if err != nil || !link.Valid || link.IsOutdated() {
 			logger.Error(err)
-			ginutils.RenderSuccess(c, createRedeemErrorResponse("Invalid code"))
+			RenderSuccess(c, createRedeemErrorResponse("Invalid code"))
 			return
 		}
 		semaphore.Acquire()
@@ -288,7 +290,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		host, err := storage.GetHost(link.Asset.Coin)
 		if err != nil {
 			logger.Error(err)
-			ginutils.RenderSuccess(c, createRedeemErrorResponse("Coin without node. You need to insert a host for this coin node"))
+			RenderSuccess(c, createRedeemErrorResponse("Coin without node. You need to insert a host for this coin node"))
 			return
 		}
 
@@ -296,7 +298,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		p, err := platform.GetTxPlatform(link.Asset.Coin, host)
 		if err != nil {
 			logger.Error(err, "Failed to initialize platform API")
-			ginutils.RenderSuccess(c, createRedeemErrorResponse(err.Error()))
+			RenderSuccess(c, createRedeemErrorResponse(err.Error()))
 			return
 		}
 
@@ -306,13 +308,13 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		err = storage.UpdateLink(link)
 		if err != nil {
 			logger.Error(err)
-			ginutils.RenderSuccess(c, createRedeemErrorResponse("CCannot invalidate code"))
+			RenderSuccess(c, createRedeemErrorResponse("CCannot invalidate code"))
 			return
 		}
 
 		// Verify asset is used
 		if link.Asset.Used {
-			ginutils.RenderSuccess(c, createRedeemErrorResponse("Asset already used"))
+			RenderSuccess(c, createRedeemErrorResponse("Asset already used"))
 			return
 		}
 		link.Asset.Used = true
@@ -329,7 +331,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		}
 
 		// Return success
-		ginutils.RenderSuccess(c, createRedeemSuccessResponse(result, link.Asset.Assets, p.Coin().Decimals))
+		RenderSuccess(c, createRedeemSuccessResponse(result, link.Asset.Assets, p.Coin().Decimals))
 
 		// Save assets state
 		err = storage.UpdateLink(link)
@@ -367,4 +369,13 @@ func createRedeemErrorResponse(description string) redemption.RedeemResult {
 		result.ImageURL = msg.GetImage()
 	}
 	return result
+}
+
+func RenderSuccess(c *gin.Context, result interface{}) {
+	b, err := json.Marshal(result)
+	if err == nil {
+		c.Header("Content-Length", strconv.Itoa(len(b)))
+		c.Header("Content-Range", strconv.Itoa(len(b)))
+	}
+	c.JSON(http.StatusOK, result)
 }
