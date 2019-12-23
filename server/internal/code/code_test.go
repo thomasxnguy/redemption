@@ -9,7 +9,7 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	_ = os.Setenv("LINK_URL", "https://redeem.trustwallet.com/redeem?code={{.Code}}&provider={{.Provider}}")
+	_ = os.Setenv("LINK_URL", "https://link.trustwallet.com/redeem?code={{.Code}}&provider={{.Provider}}")
 	_ = os.Setenv("CODE_PREFIX", "trust-")
 	_ = os.Setenv("CODE_PATTERN", "####-####-####")
 	_ = os.Setenv("CODE_CHARSET", "0123456789")
@@ -29,12 +29,12 @@ func Test_getUrl(t *testing.T) {
 	}{
 		{
 			"test 1",
-			args{"trust-VLQ-lEt-cRr", "redeem.trustwallet.com"},
-			"https://redeem.trustwallet.com/redeem?code=trust-VLQ-lEt-cRr&provider=redeem.trustwallet.com",
+			args{"trust-VLQ-lEt-cRr", "link.trustwallet.com"},
+			"https://link.trustwallet.com/redeem?code=trust-VLQ-lEt-cRr&provider=link.trustwallet.com",
 		}, {
 			"test 2",
 			args{"Ha4-let-TYr", "redeem.binance.com"},
-			"https://redeem.trustwallet.com/redeem?code=Ha4-let-TYr&provider=redeem.binance.com",
+			"https://link.trustwallet.com/redeem?code=Ha4-let-TYr&provider=redeem.binance.com",
 		},
 	}
 	for _, tt := range tests {
@@ -71,11 +71,11 @@ func TestCreateLinks(t *testing.T) {
 		args    args
 		wantErr bool
 	}{
-		{"generate 10 codes", args{10, "redeem.trustwallet.com", assets}, false},
-		{"generate 100 codes", args{100, "redeem.trustwallet.com", assets}, false},
-		{"generate 1000 codes", args{1000, "redeem.trustwallet.com", assets}, false},
-		{"generate code error", args{0, "redeem.trustwallet.com", assets}, true},
-		{"generate code error", args{10, "redeem.trustwallet.com", redemption.Assets{}}, true},
+		{"generate 10 codes", args{10, "link.trustwallet.com", assets}, false},
+		{"generate 100 codes", args{100, "link.trustwallet.com", assets}, false},
+		{"generate 1000 codes", args{1000, "link.trustwallet.com", assets}, false},
+		{"generate code error", args{0, "link.trustwallet.com", assets}, true},
+		{"generate code error", args{10, "link.trustwallet.com", redemption.Assets{}}, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

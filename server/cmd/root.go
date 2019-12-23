@@ -49,7 +49,7 @@ func init() {
 		logger.Error(err)
 	}
 	rootCmd.PersistentFlags().StringP("client", "c", "./../client/build", "Path to client folder")
-	err = viper.BindPFlag("client.path", rootCmd.PersistentFlags().Lookup("message"))
+	err = viper.BindPFlag("client.path", rootCmd.PersistentFlags().Lookup("client"))
 	if err != nil {
 		logger.Error(err)
 	}

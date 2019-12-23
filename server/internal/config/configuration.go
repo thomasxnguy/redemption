@@ -47,7 +47,7 @@ func setDefaults() {
 	viper.SetDefault("Code.Prefix", "")
 	viper.SetDefault("Code.Pattern", "####-####-####")
 	viper.SetDefault("Client.Path", "./../client/build")
-	viper.SetDefault("Link.Url", "https://redeem.trustwallet.com/redeem?code={{.Code}}&provider={{.Provider}}")
+	viper.SetDefault("Link.Url", "https://link.trustwallet.com/redeem?code={{.Code}}&provider={{.Provider}}")
 	viper.SetDefault("Wallet.Mnemonic", "")
 	viper.SetDefault("Mongo.Uri", "")
 	viper.SetDefault("Api.Mode", "release")
