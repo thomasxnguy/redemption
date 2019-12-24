@@ -1,9 +1,9 @@
 package config
 
 import (
-	"fmt"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/spf13/viper"
+	"github.com/trustwallet/blockatlas/pkg/logger"
 	"log"
 	"strings"
 )
@@ -62,7 +62,7 @@ func InitConfig() {
 	viper.AutomaticEnv() // read in environment variables that match
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	if err := viper.Unmarshal(&Configuration); err != nil {
-		fmt.Printf("Error Unmarshal: %s \n", err)
+		logger.Error(err, "Error Unmarshal Viper Config File")
 	}
 	log.Printf("API_PORT: %s", Configuration.Port)
 	log.Printf("CODE_PREFIX: %s", Configuration.Code.Prefix)
@@ -75,4 +75,9 @@ func InitConfig() {
 	log.Printf("API_AUTH_TOKEN: %s", Configuration.Api.Auth_Token)
 	log.Printf("MESSAGE_FILE: %s", Configuration.Message.File)
 	log.Printf("TRANSACTION_MEMO: %s", Configuration.Transaction.Memo)
+
+	err := ReplaceAuthToken()
+	if err != nil {
+		logger.Error(err, "Failed replace auth token from js files")
+	}
 }

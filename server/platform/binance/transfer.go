@@ -13,6 +13,10 @@ import (
 	"github.com/trustwallet/redemption/server/pkg/redemption"
 )
 
+const (
+	CurrentNetwork = types.ProdNetwork
+)
+
 type Platform struct {
 	Client     sdk.DexClient
 	KeyManager keys.KeyManager
@@ -20,9 +24,7 @@ type Platform struct {
 }
 
 func (p *Platform) Init(provider string) error {
-	// TODO change to main net
-	types.Network = types.TestNetwork
-
+	types.Network = CurrentNetwork
 	var err error
 	mnemonic := config.Configuration.Wallet.Mnemonic
 	p.KeyManager, err = keys.NewMnemonicKeyManager(mnemonic)
@@ -31,7 +33,7 @@ func (p *Platform) Init(provider string) error {
 	}
 	p.Address = p.KeyManager.GetAddr().String()
 	// TODO change to main net
-	p.Client, err = sdk.NewDexClient(provider, types.TestNetwork, p.KeyManager)
+	p.Client, err = sdk.NewDexClient(provider, CurrentNetwork, p.KeyManager)
 	if err != nil {
 		return errors.E(err, "cannot connect to client", logger.Params{"provider": provider})
 	}
