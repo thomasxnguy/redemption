@@ -9,7 +9,7 @@ import {
 
 export default class extends React.Component {
     state = {
-        bearerToken: "{{.API_AUTH_TOKEN}}"
+        bearerToken: ""
     };
 
     componentDidMount() {
