@@ -54,7 +54,13 @@ func init() {
 		logger.Error(err)
 	}
 
-	loadConf := func() { config.InitConfig() }
+	loadConf := func() {
+		config.InitConfig()
+		err := config.ReplaceAuthToken()
+		if err != nil {
+			logger.Error(err, "Failed replace auth token from js files")
+		}
+	}
 	loadLogger := func() { logger.InitLogger() }
 	cobra.OnInitialize(loadConf)
 	cobra.OnInitialize(loadLogger)

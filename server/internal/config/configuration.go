@@ -75,9 +75,4 @@ func InitConfig() {
 	log.Printf("API_AUTH_TOKEN: %s", Configuration.Api.Auth_Token)
 	log.Printf("MESSAGE_FILE: %s", Configuration.Message.File)
 	log.Printf("TRANSACTION_MEMO: %s", Configuration.Transaction.Memo)
-
-	err := ReplaceAuthToken()
-	if err != nil {
-		logger.Error(err, "Failed replace auth token from js files")
-	}
 }

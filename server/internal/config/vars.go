@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/trustwallet/blockatlas/pkg/errors"
+	"github.com/trustwallet/blockatlas/pkg/logger"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -18,6 +19,7 @@ func ReplaceAuthToken() error {
 	if err != nil {
 		return errors.E(err, "Failed to get files from folder", errors.Params{"path": rootPath})
 	}
+	logger.Info("try to replace vars inside js files", logger.Params{"token": Configuration.Api.Auth_Token})
 	for _, f := range files {
 		if !strings.HasSuffix(f, ".js") {
 			continue
@@ -27,6 +29,7 @@ func ReplaceAuthToken() error {
 			return errors.E(err, "Failed to replace token var from file", errors.Params{"file": f, "path": rootPath})
 		}
 	}
+	logger.Info("files replaces", logger.Params{"files": len(files)})
 	return nil
 }
 
@@ -41,6 +44,7 @@ func filesFromFolder(root string) (files []string, err error) {
 }
 
 func replaceVars(path, old, new string) error {
+	logger.Info("replacing vars inside js file", logger.Params{"path": path})
 	read, err := ioutil.ReadFile(path)
 	if err != nil {
 		return err
