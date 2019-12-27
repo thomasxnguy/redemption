@@ -34,7 +34,7 @@ func New() (*Storage, error) {
 type Redeem interface {
 	InsertLinks(links redemption.Links) error
 	UpdateLink(link *redemption.Link) error
-	GetLinks(page int, provider string) (redemption.Links, error)
+	GetLinks(provider string) (redemption.Links, error)
 	GetLink(code string) (*redemption.Link, error)
 	GetLinksByProvider(provider string) (redemption.Links, error)
 	GetHost(coin uint) (string, error)
@@ -42,5 +42,5 @@ type Redeem interface {
 
 type Host interface {
 	InsertHosts(hosts redemption.CoinHosts) error
-	GetHosts(page int) (redemption.CoinHosts, error)
+	GetHosts() (redemption.CoinHosts, error)
 }

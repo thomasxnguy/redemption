@@ -9,9 +9,6 @@ GOBASE := $(shell pwd)
 GOBIN := $(GOBASE)/bin
 GOPKG := $(.)
 
-# Environment variables
-TEST_CONFIG=$(GOBASE)/config.yml
-
 # Go files
 GOFMT_FILES?=$$(find . -name '*.go' | grep -v vendor)
 

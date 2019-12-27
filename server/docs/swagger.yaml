@@ -193,12 +193,6 @@ paths:
         name: Authorization
         required: true
         type: string
-      - default: "0"
-        description: Page
-        in: query
-        name: page
-        required: true
-        type: string
       produces:
       - application/json
       responses:
@@ -309,12 +303,6 @@ paths:
         description: Bearer Token
         in: header
         name: Authorization
-        required: true
-        type: string
-      - default: "0"
-        description: Page
-        in: query
-        name: page
         required: true
         type: string
       - description: Provider name

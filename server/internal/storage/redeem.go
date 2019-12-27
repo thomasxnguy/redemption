@@ -27,7 +27,7 @@ func (s *Storage) UpdateLink(link *redemption.Link) error {
 	return nil
 }
 
-func (s *Storage) GetLinks(page int, provider string) (redemption.Links, error) {
+func (s *Storage) GetLinks(provider string) (redemption.Links, error) {
 	links := make(redemption.Links, 0)
 	query := bson.M{}
 	if len(provider) > 0 {
@@ -38,15 +38,7 @@ func (s *Storage) GetLinks(page int, provider string) (redemption.Links, error) 
 	if err != nil {
 		return links, err
 	}
-	count := redemption.LinksPageCount + 1
-	pagination := page * count
-	for i, link := range result {
-		if i > (pagination - 1) {
-			return links, nil
-		}
-		if i < pagination-count {
-			continue
-		}
+	for _, link := range result {
 		links = append(links, link)
 	}
 	return links, nil

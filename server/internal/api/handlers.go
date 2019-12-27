@@ -13,7 +13,6 @@ import (
 	"github.com/trustwallet/redemption/server/internal/storage"
 	"github.com/trustwallet/redemption/server/pkg/redemption"
 	"github.com/trustwallet/redemption/server/platform"
-	"strconv"
 )
 
 // @Summary Get Status
@@ -81,7 +80,6 @@ func insertCoinHosts(storage storage.Host) func(c *gin.Context) {
 // @Produce json
 // @Tags host
 // @Param Authorization header string true "Bearer Token" default(Bearer Default Value)
-// @Param page query string true "Page" default(0)
 // @Success 200 {object} redemption.CoinHosts
 // @Error 500 {object} ginutils.ApiError
 // @Router /v1/hosts [get]
@@ -90,14 +88,7 @@ func getCoinHosts(storage storage.Host) func(c *gin.Context) {
 		return nil
 	}
 	return func(c *gin.Context) {
-		page := c.DefaultQuery("page", "0")
-		p, err := strconv.Atoi(page)
-		if err != nil {
-			logger.Error(err)
-			ginutils.ErrorResponse(c).Message("failed to parse the page number").Render()
-			return
-		}
-		links, err := storage.GetHosts(p + 1)
+		links, err := storage.GetHosts()
 		if err != nil {
 			logger.Error(err)
 		}
@@ -155,7 +146,6 @@ func createLinks(storage storage.Redeem) func(c *gin.Context) {
 // @Produce json
 // @Tags redeem
 // @Param Authorization header string true "Bearer Token" default(Bearer Default Value)
-// @Param page query string true "Page" default(0)
 // @Param provider query string true "Provider name"
 // @Success 200 {object} redemption.Links
 // @Error 500 {object} ginutils.ApiError
@@ -165,15 +155,8 @@ func getAllLinks(storage storage.Redeem) func(c *gin.Context) {
 		return nil
 	}
 	return func(c *gin.Context) {
-		page := c.DefaultQuery("page", "1")
 		provider := c.Query("provider")
-		p, err := strconv.Atoi(page)
-		if err != nil {
-			logger.Error(err)
-			ginutils.ErrorResponse(c).Message("failed to parse the page number").Render()
-			return
-		}
-		links, err := storage.GetLinks(p, provider)
+		links, err := storage.GetLinks(provider)
 		if err != nil {
 			logger.Error(err)
 		}

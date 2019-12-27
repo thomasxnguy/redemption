@@ -18,7 +18,7 @@ func (s *Storage) InsertHosts(hosts redemption.CoinHosts) (err error) {
 	return
 }
 
-func (s *Storage) GetHosts(page int) (redemption.CoinHosts, error) {
+func (s *Storage) GetHosts() (redemption.CoinHosts, error) {
 	hosts := make(redemption.CoinHosts, 0)
 
 	query := bson.M{}
@@ -27,15 +27,7 @@ func (s *Storage) GetHosts(page int) (redemption.CoinHosts, error) {
 	if err != nil {
 		return hosts, err
 	}
-	count := redemption.LinksPageCount + 1
-	pagination := page * count
-	for i, host := range result {
-		if i > (pagination - 1) {
-			return hosts, nil
-		}
-		if i < pagination-count {
-			continue
-		}
+	for _, host := range result {
 		hosts = append(hosts, host)
 	}
 	return hosts, nil

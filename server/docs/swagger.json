@@ -64,14 +64,6 @@
                         "name": "Authorization",
                         "in": "header",
                         "required": true
-                    },
-                    {
-                        "type": "string",
-                        "default": "0",
-                        "description": "Page",
-                        "name": "page",
-                        "in": "query",
-                        "required": true
                     }
                 ],
                 "responses": {
@@ -235,14 +227,6 @@
                         "description": "Bearer Token",
                         "name": "Authorization",
                         "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "default": "0",
-                        "description": "Page",
-                        "name": "page",
-                        "in": "query",
                         "required": true
                     },
                     {

@@ -9,8 +9,6 @@ type RedeemResultType string
 const (
 	RedeemResultTypeError   RedeemResultType = "error"
 	RedeemResultTypeSuccess RedeemResultType = "success"
-
-	LinksPageCount = 50
 )
 
 type RedeemResult struct {
