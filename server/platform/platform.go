@@ -40,3 +40,11 @@ func GetTxPlatform(coin uint, provider string) (redemption.TxApi, error) {
 	}
 	return p, nil
 }
+
+func GetPlatform(coin uint) (redemption.TxApi, error) {
+	p, ok := TxAPIs[coin]
+	if !ok {
+		return nil, errors.E("coin not supported", errors.Params{"coin": coin})
+	}
+	return p, nil
+}

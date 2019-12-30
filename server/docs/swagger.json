@@ -42,6 +42,47 @@
                 }
             }
         },
+        "/v1/address/:platform": {
+            "get": {
+                "description": "Get public address from a main wallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "account"
+                ],
+                "summary": "Get public address",
+                "operationId": "public_address",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "Bearer Default Value",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "the platform Id",
+                        "name": "platform",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/redemption.Address"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/hosts": {
             "get": {
                 "description": "Get a host for a specific coin",
@@ -335,6 +376,20 @@
         }
     },
     "definitions": {
+        "redemption.Address": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "coin": {
+                    "type": "integer"
+                },
+                "coin_name": {
+                    "type": "string"
+                }
+            }
+        },
         "redemption.Asset": {
             "type": "object",
             "properties": {

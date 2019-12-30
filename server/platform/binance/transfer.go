@@ -89,6 +89,16 @@ func (p *Platform) TransferAssets(addresses []string, assets redemption.Assets) 
 	return sendResult.Hash, nil
 }
 
+func (p *Platform) GetPublicAddress() (string, error) {
+	types.Network = CurrentNetwork
+	mnemonic := config.Configuration.Wallet.Mnemonic
+	km, err := keys.NewMnemonicKeyManager(mnemonic)
+	if err != nil || km == nil {
+		return "", errors.E(err, "unable to create a NewMnemonicKeyManager")
+	}
+	return km.GetAddr().String(), nil
+}
+
 func verifyBalance(account *types.BalanceAccount, asset redemption.Asset, repeat int) bool {
 	var tokenBalance int64 = 0
 	for _, balance := range account.Balances {

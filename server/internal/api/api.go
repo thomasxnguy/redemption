@@ -50,6 +50,9 @@ func makeRoutes(engine *gin.Engine, storage *storage.Storage) {
 	v1 := engine.Group("/v1")
 	v1.Use(ginutils.TokenAuthMiddleware(config.Configuration.Api.Auth_Token))
 
+	// Address
+	v1.GET("/address/:platform", getPublicAddress())
+
 	// Redeem
 	v1.GET("/links", getAllLinks(storage))
 	v1.GET("/link/:code", getLink(storage))

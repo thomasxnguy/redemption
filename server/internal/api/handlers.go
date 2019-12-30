@@ -13,6 +13,7 @@ import (
 	"github.com/trustwallet/redemption/server/internal/storage"
 	"github.com/trustwallet/redemption/server/pkg/redemption"
 	"github.com/trustwallet/redemption/server/platform"
+	"strconv"
 )
 
 // @Summary Get Status
@@ -191,6 +192,48 @@ func getLink(storage storage.Redeem) func(c *gin.Context) {
 	}
 }
 
+// @Summary Get public address
+// @ID public_address
+// @Description Get public address from a main wallet
+// @Accept json
+// @Produce json
+// @Tags account
+// @Param Authorization header string true "Bearer Token" default(Bearer Default Value)
+// @Param platform path string true "the platform Id"
+// @Success 200 {object} redemption.Address
+// @Error 500 {object} ginutils.ApiError
+// @Router /v1/address/:platform [get]
+func getPublicAddress() func(c *gin.Context) {
+	return func(c *gin.Context) {
+		platformId := c.Param("platform")
+		if len(platformId) == 0 {
+			ginutils.RenderSuccess(c, createRedeemErrorResponse("Platform cannot be empty"))
+			return
+		}
+		id, err := strconv.Atoi(platformId)
+		if err != nil {
+			logger.Error(err, "Invalid platform id")
+			ginutils.RenderSuccess(c, createRedeemErrorResponse(err.Error()))
+			return
+		}
+
+		p, err := platform.GetPlatform(uint(id))
+		if err != nil {
+			logger.Error(err, "Invalid platform API")
+			ginutils.RenderSuccess(c, createRedeemErrorResponse(err.Error()))
+			return
+		}
+
+		address, err := p.GetPublicAddress()
+		if err != nil {
+			logger.Error(err)
+			ginutils.ErrorResponse(c).Message(err.Error()).Render()
+			return
+		}
+		ginutils.RenderSuccess(c, redemption.Address{Address: address, Coin: p.Coin().ID, CoinName: p.Coin().Name})
+	}
+}
+
 // @Summary Update specific link
 // @ID update_link
 // @Description Update a specific link
@@ -241,7 +284,7 @@ func updateLink(storage storage.Redeem) func(c *gin.Context) {
 // @Param Authorization header string true "Bearer Token" default(Bearer Default Value)
 // @Param redeem body redemption.Redeem true "Redeem"
 // @Success 200 {object} redemption.RedeemResult
-// @Error 500 {object} ginutils.ApiError
+// @Error 500 {object} redemption.RedeemResult
 // @Router /v1/referral/redeem [post]
 func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 	if storage == nil {
@@ -278,7 +321,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		// Get asset platform
 		p, err := platform.GetTxPlatform(link.Asset.Coin, host)
 		if err != nil {
-			logger.Error(err, "Failed to initialize platform API")
+			logger.Error(err, "Invalid platform API")
 			ginutils.RenderSuccess(c, createRedeemErrorResponse(err.Error()))
 			return
 		}

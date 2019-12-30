@@ -106,3 +106,9 @@ type Success struct {
 	Status  bool   `json:"status,omitempty"`
 	Message string `json:"message,omitempty"`
 }
+
+type Address struct {
+	Address  string `json:"address"`
+	Coin     uint   `json:"coin"`
+	CoinName string `json:"coin_name"`
+}

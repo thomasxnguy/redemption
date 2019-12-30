@@ -1,4 +1,13 @@
 definitions:
+  redemption.Address:
+    properties:
+      address:
+        type: string
+      coin:
+        type: integer
+      coin_name:
+        type: string
+    type: object
   redemption.Asset:
     properties:
       amount:
@@ -180,6 +189,34 @@ paths:
       summary: Get Status
       tags:
       - status
+  /v1/address/:platform:
+    get:
+      consumes:
+      - application/json
+      description: Get public address from a main wallet
+      operationId: public_address
+      parameters:
+      - default: Bearer Default Value
+        description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: the platform Id
+        in: path
+        name: platform
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/redemption.Address'
+      summary: Get public address
+      tags:
+      - account
   /v1/hosts:
     get:
       consumes:

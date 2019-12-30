@@ -7,6 +7,7 @@ import (
 type Platform interface {
 	Init(provider string) error
 	Coin() coin.Coin
+	GetPublicAddress() (string, error)
 }
 
 type TxApi interface {
