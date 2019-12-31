@@ -43,7 +43,7 @@ func makeMetricsRoute(router gin.IRouter) {
 // @Accept json
 // @Produce json
 // @Tags host
-// @Param Authorization header string true "Bearer Token" default(Bearer Default Value)
+// @Param Authorization header string false "Bearer Token" default()
 // @Param hosts body redemption.CoinHosts true "Hosts"
 // @Success 200 {object} redemption.Success
 // @Error 500 {object} ginutils.ApiError
@@ -80,7 +80,7 @@ func insertCoinHosts(storage storage.Host) func(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Tags host
-// @Param Authorization header string true "Bearer Token" default(Bearer Default Value)
+// @Param Authorization header string false "Bearer Token" default()
 // @Success 200 {object} redemption.CoinHosts
 // @Error 500 {object} ginutils.ApiError
 // @Router /v1/hosts [get]
@@ -103,7 +103,7 @@ func getCoinHosts(storage storage.Host) func(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Tags redeem
-// @Param Authorization header string true "Bearer Token" default(Bearer Default Value)
+// @Param Authorization header string false "Bearer Token" default()
 // @Param links body redemption.CreateLinks true "Links"
 // @Success 200 {object} redemption.Links
 // @Error 500 {object} ginutils.ApiError
@@ -146,7 +146,7 @@ func createLinks(storage storage.Redeem) func(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Tags redeem
-// @Param Authorization header string true "Bearer Token" default(Bearer Default Value)
+// @Param Authorization header string false "Bearer Token" default()
 // @Param provider query string true "Provider name"
 // @Success 200 {object} redemption.Links
 // @Error 500 {object} ginutils.ApiError
@@ -171,11 +171,11 @@ func getAllLinks(storage storage.Redeem) func(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Tags redeem
-// @Param Authorization header string true "Bearer Token" default(Bearer Default Value)
+// @Param Authorization header string false "Bearer Token" default()
 // @Param code path string true "the link code"
 // @Success 200 {object} redemption.Link
 // @Error 500 {object} ginutils.ApiError
-// @Router /v1/link/:code [get]
+// @Router /v1/link/{code} [get]
 func getLink(storage storage.Redeem) func(c *gin.Context) {
 	if storage == nil {
 		return nil
@@ -198,11 +198,11 @@ func getLink(storage storage.Redeem) func(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Tags account
-// @Param Authorization header string true "Bearer Token" default(Bearer Default Value)
-// @Param platform path string true "the platform Id"
+// @Param Authorization header string false "Bearer Token" default()
+// @Param platform path string true "the platform Id" default(714)
 // @Success 200 {object} redemption.Address
 // @Error 500 {object} ginutils.ApiError
-// @Router /v1/address/:platform [get]
+// @Router /v1/address/{platform} [get]
 func getPublicAddress() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		platformId := c.Param("platform")
@@ -240,12 +240,12 @@ func getPublicAddress() func(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Tags redeem
-// @Param Authorization header string true "Bearer Token" default(Bearer Default Value)
+// @Param Authorization header string false "Bearer Token" default()
 // @Param code path string true "the link code"
 // @Param link body redemption.UpdateLink true "Link"
 // @Success 200 {object} redemption.Link
 // @Error 500 {object} ginutils.ApiError
-// @Router /v1/link/:code [post]
+// @Router /v1/link/{code} [post]
 func updateLink(storage storage.Redeem) func(c *gin.Context) {
 	if storage == nil {
 		return nil
@@ -281,7 +281,7 @@ func updateLink(storage storage.Redeem) func(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Tags redeem
-// @Param Authorization header string true "Bearer Token" default(Bearer Default Value)
+// @Param Authorization header string false "Bearer Token" default()
 // @Param redeem body redemption.Redeem true "Redeem"
 // @Success 200 {object} redemption.RedeemResult
 // @Error 500 {object} redemption.RedeemResult
