@@ -189,20 +189,20 @@ paths:
       summary: Get Status
       tags:
       - status
-  /v1/address/:platform:
+  /v1/address/{platform}:
     get:
       consumes:
       - application/json
       description: Get public address from a main wallet
       operationId: public_address
       parameters:
-      - default: Bearer Default Value
+      - default: ""
         description: Bearer Token
         in: header
         name: Authorization
-        required: true
         type: string
-      - description: the platform Id
+      - default: "714"
+        description: the platform Id
         in: path
         name: platform
         required: true
@@ -224,11 +224,10 @@ paths:
       description: Get a host for a specific coin
       operationId: get_coin_host
       parameters:
-      - default: Bearer Default Value
+      - default: ""
         description: Bearer Token
         in: header
         name: Authorization
-        required: true
         type: string
       produces:
       - application/json
@@ -246,11 +245,10 @@ paths:
       description: Insert a host for a specific coin
       operationId: insert_coin_host
       parameters:
-      - default: Bearer Default Value
+      - default: ""
         description: Bearer Token
         in: header
         name: Authorization
-        required: true
         type: string
       - description: Hosts
         in: body
@@ -268,18 +266,17 @@ paths:
       summary: Insert coin host
       tags:
       - host
-  /v1/link/:code:
+  /v1/link/{code}:
     get:
       consumes:
       - application/json
       description: Get a specific link
       operationId: get_link
       parameters:
-      - default: Bearer Default Value
+      - default: ""
         description: Bearer Token
         in: header
         name: Authorization
-        required: true
         type: string
       - description: the link code
         in: path
@@ -302,11 +299,10 @@ paths:
       description: Update a specific link
       operationId: update_link
       parameters:
-      - default: Bearer Default Value
+      - default: ""
         description: Bearer Token
         in: header
         name: Authorization
-        required: true
         type: string
       - description: the link code
         in: path
@@ -336,11 +332,10 @@ paths:
       description: Get all referral links
       operationId: get_all_links
       parameters:
-      - default: Bearer Default Value
+      - default: ""
         description: Bearer Token
         in: header
         name: Authorization
-        required: true
         type: string
       - description: Provider name
         in: query
@@ -364,11 +359,10 @@ paths:
       description: Create code and links for referral from a specific asset
       operationId: create_links
       parameters:
-      - default: Bearer Default Value
+      - default: ""
         description: Bearer Token
         in: header
         name: Authorization
-        required: true
         type: string
       - description: Links
         in: body
@@ -393,11 +387,10 @@ paths:
       description: Redeem the referral code
       operationId: create_links
       parameters:
-      - default: Bearer Default Value
+      - default: ""
         description: Bearer Token
         in: header
         name: Authorization
-        required: true
         type: string
       - description: Redeem
         in: body
