@@ -32,7 +32,6 @@ func (p *Platform) Init(provider string) error {
 		return errors.E(err, "unable to create a NewMnemonicKeyManager")
 	}
 	p.Address = p.KeyManager.GetAddr().String()
-	// TODO change to main net
 	p.Client, err = sdk.NewDexClient(provider, CurrentNetwork, p.KeyManager)
 	if err != nil {
 		return errors.E(err, "cannot connect to client", logger.Params{"provider": provider})
