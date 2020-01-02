@@ -298,7 +298,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 	semaphore := util.NewSemaphore(1)
 	return func(c *gin.Context) {
 		reqBody, _ := ioutil.ReadAll(c.Request.Body)
-		c.Request.Body = ioutil.nopCloser(bytes.NewReader(reqBody))
+		c.Request.Body = ioutil.NopCloser(bytes.NewReader(reqBody))
 		fmt.Println(string(reqBody))
 
 		var body redemption.Redeem
