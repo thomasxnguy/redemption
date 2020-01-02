@@ -15,6 +15,8 @@ import (
 	"github.com/trustwallet/redemption/server/platform"
 	"strconv"
 	"fmt"
+	"bytes"
+	"ioutil"
 )
 
 // @Summary Get Status
