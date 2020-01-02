@@ -301,6 +301,11 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 			return
 		}
 
+		fmt.Println(body)
+		fmt.Println("Code:", body.Code)
+		fmt.Println("Observers:", body.Observers)
+		fmt.Println(body)
+
 		// Get the code from database
 		link, err := storage.GetLink(body.Code)
 		if err != nil || !link.Valid || link.IsOutdated() {
