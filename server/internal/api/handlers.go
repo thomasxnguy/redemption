@@ -16,7 +16,7 @@ import (
 	"strconv"
 	"fmt"
 	"bytes"
-	"ioutil"
+	"io/ioutil"
 )
 
 // @Summary Get Status
