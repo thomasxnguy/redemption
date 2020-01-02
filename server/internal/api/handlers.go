@@ -14,6 +14,7 @@ import (
 	"github.com/trustwallet/redemption/server/pkg/redemption"
 	"github.com/trustwallet/redemption/server/platform"
 	"strconv"
+	"fmt"
 )
 
 // @Summary Get Status
@@ -304,7 +305,6 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		fmt.Println(body)
 		fmt.Println("Code:", body.Code)
 		fmt.Println("Observers:", body.Observers)
-		fmt.Println(body)
 
 		// Get the code from database
 		link, err := storage.GetLink(body.Code)
