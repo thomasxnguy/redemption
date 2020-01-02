@@ -74,7 +74,7 @@ type Asset struct {
 
 type Redeem struct {
 	Code      string    `json:"code" bson:"coin"`
-	Observers Observers `json:"addresses" bson:"addresses"`
+	Observers Observers `json:"observers" bson:"observers"`
 }
 
 type Observer struct {
