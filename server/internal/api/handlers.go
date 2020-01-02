@@ -295,6 +295,10 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 	// avoid race condition with semaphore
 	semaphore := util.NewSemaphore(1)
 	return func(c *gin.Context) {
+		reqBody, _ := ioutil.ReadAll(c.Request.Body)
+		c.Request.Body = ioutil.nopCloser(bytes.NewReader(reqBody))
+		fmt.Println(string(reqBody))
+
 		var body redemption.Redeem
 		if err := c.BindJSON(&body); err != nil {
 			logger.Error(err)
