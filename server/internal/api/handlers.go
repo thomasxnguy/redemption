@@ -300,14 +300,27 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 			ginutils.RenderSuccess(c, createRedeemErrorResponse(err.Error()))
 			return
 		}
+		if body.Observers == nil || len(body.Observers) == 0 {
+			ginutils.RenderSuccess(c, createRedeemErrorResponse("No accounts available to redeem"))
+			return
+		}
 
 		// Get the code from database
 		link, err := storage.GetLink(body.Code)
-		if err != nil || !link.Valid || link.IsOutdated() {
+		if err != nil {
 			logger.Error(err)
 			ginutils.RenderSuccess(c, createRedeemErrorResponse("Invalid code"))
 			return
 		}
+		if !link.Valid {
+			ginutils.RenderSuccess(c, createRedeemErrorResponse("Code already been redeemed"))
+			return
+		}
+		if link.IsOutdated() {
+			ginutils.RenderSuccess(c, createRedeemErrorResponse("The code is outdated"))
+			return
+		}
+
 		semaphore.Acquire()
 		defer semaphore.Release()
 
