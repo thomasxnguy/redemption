@@ -102,7 +102,7 @@ func (db *MongoDb) DeleteOne(database, collection string, query bson.D) (int64, 
 	return res.DeletedCount, nil
 }
 
-func (db *MongoDb) DeleteMany(database, collection string, query bson.D) (int64, error) {
+func (db *MongoDb) DeleteMany(database, collection string, query interface{}) (int64, error) {
 	c := db.Database(database).Collection(collection)
 	res, err := c.DeleteMany(context.TODO(), query)
 	if err != nil {

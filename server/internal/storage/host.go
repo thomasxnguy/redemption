@@ -13,6 +13,7 @@ func (s *Storage) InsertHosts(hosts redemption.CoinHosts) (err error) {
 	h := make([]interface{}, 0)
 	for _, host := range hosts {
 		h = append(h, host)
+		_, _ = s.DeleteMany(Database, HostsCollection, bson.D{{"coin", host.Coin}})
 	}
 	_, err = s.InsertMany(Database, HostsCollection, h)
 	return
