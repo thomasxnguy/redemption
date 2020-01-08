@@ -16,6 +16,7 @@ type RedeemResult struct {
 	Description string           `json:"description"`
 	ImageURL    string           `json:"image_url,omitempty"`
 	Type        RedeemResultType `json:"type"`
+	Assets      Assets           `json:"assets"`
 	Error       string           `json:"error,omitempty"`
 	ResultId    []string         `json:"result_id,omitempty"`
 }

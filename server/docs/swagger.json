@@ -569,6 +569,10 @@
         "redemption.RedeemResult": {
             "type": "object",
             "properties": {
+                "assets": {
+                    "type": "object",
+                    "$ref": "#/definitions/redemption.Assets"
+                },
                 "description": {
                     "type": "string"
                 },

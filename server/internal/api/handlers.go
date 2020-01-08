@@ -368,7 +368,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		}
 
 		// Return success
-		ginutils.RenderSuccess(c, createRedeemSuccessResponse(result, link.Asset.Assets, p.Coin().Decimals))
+		ginutils.RenderSuccess(c, createRedeemSuccessResponse(result, link.Asset, p.Coin().Decimals))
 
 		// Save assets state
 		err = storage.UpdateLink(link)
@@ -379,7 +379,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 	}
 }
 
-func createRedeemSuccessResponse(result []string, assets []redemption.Asset, decimals uint) redemption.RedeemResult {
+func createRedeemSuccessResponse(result []string, assets redemption.Assets, decimals uint) redemption.RedeemResult {
 	msg, err := message.GetMessage()
 	if err != nil {
 		return redemption.RedeemResult{
@@ -389,8 +389,9 @@ func createRedeemSuccessResponse(result []string, assets []redemption.Asset, dec
 	return redemption.RedeemResult{
 		Type:        redemption.RedeemResultTypeSuccess,
 		Title:       msg.GetTitle(),
-		Description: msg.GetDescription(assets, decimals),
+		Description: msg.GetDescription(assets.Assets, decimals),
 		ImageURL:    msg.GetImage(),
+		Assets:      assets,
 		ResultId:    result,
 	}
 }

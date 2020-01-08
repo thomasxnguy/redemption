@@ -130,6 +130,9 @@ definitions:
     type: object
   redemption.RedeemResult:
     properties:
+      assets:
+        $ref: '#/definitions/redemption.Assets'
+        type: object
       description:
         type: string
       error:
