@@ -37,10 +37,4 @@ type Redeem interface {
 	GetLinks(provider string) (redemption.Links, error)
 	GetLink(code string) (*redemption.Link, error)
 	GetLinksByProvider(provider string) (redemption.Links, error)
-	GetHost(coin uint) (string, error)
-}
-
-type Host interface {
-	InsertHosts(hosts redemption.CoinHosts) error
-	GetHosts() (redemption.CoinHosts, error)
 }

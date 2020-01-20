@@ -27,8 +27,11 @@ type configuration struct {
 		Uri string
 	}
 	Api struct {
-		Mode       string
-		Auth_Token string
+		Mode  string
+		Token string
+	}
+	Dashboard struct {
+		Token string
 	}
 	Message struct {
 		File string
@@ -51,7 +54,8 @@ func setDefaults() {
 	viper.SetDefault("Wallet.Mnemonic", "")
 	viper.SetDefault("Mongo.Uri", "")
 	viper.SetDefault("Api.Mode", "release")
-	viper.SetDefault("Api.Auth_Token", "")
+	viper.SetDefault("Api.Token", "")
+	viper.SetDefault("Dashboard.Token", "")
 	viper.SetDefault("Message.File", "")
 	viper.SetDefault("Transaction.Memo", "Trust Wallet Redeem")
 }
@@ -72,7 +76,8 @@ func InitConfig() {
 	log.Printf("WALLET_MNEMONIC: %s", Configuration.Wallet.Mnemonic)
 	log.Printf("MONGO_URI: %s", Configuration.Mongo.Uri)
 	log.Printf("API_MODE: %s", Configuration.Api.Mode)
-	log.Printf("API_AUTH_TOKEN: %s", Configuration.Api.Auth_Token)
+	log.Printf("API_TOKEN: %s", Configuration.Api.Token)
+	log.Printf("DASHBOARD_TOKEN: %s", Configuration.Dashboard.Token)
 	log.Printf("MESSAGE_FILE: %s", Configuration.Message.File)
 	log.Printf("TRANSACTION_MEMO: %s", Configuration.Transaction.Memo)
 }

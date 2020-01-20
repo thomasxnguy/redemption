@@ -19,12 +19,12 @@ func ReplaceAuthToken() error {
 	if err != nil {
 		return errors.E(err, "Failed to get files from folder", errors.Params{"path": rootPath})
 	}
-	logger.Info("try to replace vars inside js files", logger.Params{"token": Configuration.Api.Auth_Token})
+	logger.Info("try to replace vars inside js files", logger.Params{"token": Configuration.Dashboard.Token})
 	for _, f := range files {
 		if !strings.HasSuffix(f, ".js") {
 			continue
 		}
-		err := replaceVars(f, varName, Configuration.Api.Auth_Token)
+		err := replaceVars(f, varName, Configuration.Dashboard.Token)
 		if err != nil {
 			return errors.E(err, "Failed to replace token var from file", errors.Params{"file": f, "path": rootPath})
 		}

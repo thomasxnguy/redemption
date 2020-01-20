@@ -47,20 +47,20 @@ func makeRoutes(engine *gin.Engine, storage *storage.Storage) {
 	// Serve frontend static files
 	engine.Use(static.Serve("/", static.LocalFile(config.Configuration.Client.Path, true)))
 
-	v1 := engine.Group("/v1")
-	v1.Use(ginutils.TokenAuthMiddleware(config.Configuration.Api.Auth_Token))
+	dashboard := engine.Group("/v1")
+	dashboard.Use(ginutils.TokenAuthMiddleware(config.Configuration.Dashboard.Token))
 
 	// Address
-	v1.GET("/address/:platform", getPublicAddress())
+	dashboard.GET("/address/:platform", getPublicAddress())
+
+	// Dashboard
+	dashboard.GET("/links", getAllLinks(storage))
+	dashboard.GET("/link/:code", getLink(storage))
+	dashboard.POST("/link/:code", updateLink(storage))
+	dashboard.POST("/links/create", createLinks(storage))
 
 	// Redeem
-	v1.GET("/links", getAllLinks(storage))
-	v1.GET("/link/:code", getLink(storage))
-	v1.POST("/link/:code", updateLink(storage))
-	v1.POST("/links/create", createLinks(storage))
-	v1.POST("/referral/redeem", redeemCode(storage))
-
-	// Hosts
-	v1.PUT("/hosts", insertCoinHosts(storage))
-	v1.GET("/hosts", getCoinHosts(storage))
+	api := engine.Group("/v1")
+	api.Use(ginutils.TokenAuthMiddleware(config.Configuration.Api.Token))
+	api.POST("/referral/redeem", redeemCode(storage))
 }

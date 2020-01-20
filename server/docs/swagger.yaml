@@ -28,22 +28,6 @@ definitions:
       used:
         type: boolean
     type: object
-  redemption.CoinHost:
-    properties:
-      coin:
-        type: integer
-      host:
-        type: string
-    type: object
-  redemption.CoinHosts:
-    items:
-      properties:
-        coin:
-          type: integer
-        host:
-          type: string
-      type: object
-    type: array
   redemption.CreateLinks:
     properties:
       asset:
@@ -74,23 +58,7 @@ definitions:
     type: object
   redemption.Links:
     items:
-      properties:
-        asset:
-          $ref: '#/definitions/redemption.Assets'
-          type: object
-        code:
-          type: string
-        created_date:
-          type: string
-        expiration_date:
-          type: string
-        link:
-          type: string
-        provider:
-          type: string
-        valid:
-          type: boolean
-      type: object
+      $ref: '#/definitions/redemption.Link'
     type: array
   redemption.Observer:
     properties:
@@ -107,18 +75,7 @@ definitions:
     type: object
   redemption.Observers:
     items:
-      properties:
-        addresses:
-          items:
-            type: string
-          type: array
-        coin:
-          type: integer
-        publicKeys:
-          items:
-            type: string
-          type: array
-      type: object
+      $ref: '#/definitions/redemption.Observer'
     type: array
   redemption.Redeem:
     properties:
@@ -220,55 +177,6 @@ paths:
       summary: Get public address
       tags:
       - account
-  /v1/hosts:
-    get:
-      consumes:
-      - application/json
-      description: Get a host for a specific coin
-      operationId: get_coin_host
-      parameters:
-      - default: ""
-        description: Bearer Token
-        in: header
-        name: Authorization
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/redemption.CoinHosts'
-      summary: Get coin host
-      tags:
-      - host
-    put:
-      consumes:
-      - application/json
-      description: Insert a host for a specific coin
-      operationId: insert_coin_host
-      parameters:
-      - default: ""
-        description: Bearer Token
-        in: header
-        name: Authorization
-        type: string
-      - description: Hosts
-        in: body
-        name: hosts
-        required: true
-        schema:
-          $ref: '#/definitions/redemption.CoinHosts'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/redemption.Success'
-      summary: Insert coin host
-      tags:
-      - host
   /v1/link/{code}:
     get:
       consumes:

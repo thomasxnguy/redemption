@@ -6,87 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "v1/hosts - Insert Host",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Bearer {{auth_token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "[\n  {\n    \"coin\": 714,\n    \"host\": \"testnet-dex.binance.org\"\n  }\n]",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/v1/hosts",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"v1",
-						"hosts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "v1/hosts - Get All Hosts",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Bearer {{auth_token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/v1/hosts",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"v1",
-						"hosts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "v1/links/create - Create codes",
 			"request": {
 				"method": "POST",
@@ -105,7 +24,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"asset\": {\n    \"coin\": 714,\n    \"assets\": [\n      {\n        \"token_id\": \"USDT.B-B7C\",\n        \"amount\": 2500\n      },\n      {\n        \"token_id\": \"BNB\",\n        \"amount\": 10000\n      }\n    ]\n  },\n  \"link_count\": 50,\n  \"provider\": \"trust-redeem.herokuapp.com\"\n}",
+					"raw": "{\n  \"asset\": {\n    \"coin\": 714,\n    \"assets\": [\n      {\n        \"token_id\": \"BUSD-BD1\",\n        \"amount\": 100\n      },\n      {\n        \"token_id\": \"BNB\",\n        \"amount\": 100\n      }\n    ]\n  },\n  \"link_count\": 10,\n  \"provider\": \"redeem.trustwallet.com\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -156,19 +75,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/v1/links?page=1",
+					"raw": "{{host}}/v1/links",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"v1",
 						"links"
-					],
-					"query": [
-						{
-							"key": "page",
-							"value": "1"
-						}
 					]
 				}
 			},
@@ -204,14 +117,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/v1/link/<REDEEM_CODE>",
+					"raw": "{{host}}/v1/link/<CODE>",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"v1",
 						"link",
-						"<REDEEM_CODE>"
+						"<CODE>"
 					]
 				}
 			},
@@ -244,14 +157,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/v1/link/<REDEEM_CODE>",
+					"raw": "{{host}}/v1/link/<CODE>",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"v1",
 						"link",
-						"<REDEEM_CODE>"
+						"<CODE>"
 					]
 				}
 			},
@@ -271,12 +184,12 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "Bearer {{auth_token}}"
+						"value": "Bearer api"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"code\": \"Y64i-FLFn-CcXU\",\n  \"observers\": [\n    {\n      \"coin\": 714,\n      \"addresses\": [\n        \"tbnb1hnzlaxaks668ptv3r5ptvsx5f6qjtezhezatkt\"\n      ]\n    }\n  ]\n}",
+					"raw": "{\n  \"code\": \"bbU4-Hb9T-ewW6\",\n  \"observers\": [\n    {\n      \"coin\": 714,\n      \"addresses\": [\n        \"tbnb1hnzlaxaks668ptv3r5ptvsx5f6qjtezhezatkt\"\n      ]\n    }\n  ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -322,15 +235,15 @@
 	],
 	"variable": [
 		{
-			"id": "26e21fd0-75ba-483e-a97a-7edb5d9fb2fd",
+			"id": "cf1a9fb6-e2f5-4bc8-a0f5-a6a238034375",
 			"key": "host",
 			"value": "http://localhost:8399",
 			"type": "string"
 		},
 		{
-			"id": "a39926e8-1013-478f-b218-b353dc668b89",
+			"id": "fdf9171a-f86b-4bd8-902c-f434089cd48e",
 			"key": "auth_token",
-			"value": "Default Value",
+			"value": "",
 			"type": "string"
 		}
 	],

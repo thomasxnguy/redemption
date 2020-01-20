@@ -96,13 +96,6 @@ func (o Observers) GetCoinObservers(coin uint) Observers {
 	return filter
 }
 
-type CoinHosts []CoinHost
-
-type CoinHost struct {
-	Coin uint   `json:"coin" bson:"coin"`
-	Host string `json:"host" bson:"host"`
-}
-
 type Success struct {
 	Status  bool   `json:"status,omitempty"`
 	Message string `json:"message,omitempty"`

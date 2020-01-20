@@ -37,66 +37,6 @@ func makeMetricsRoute(router gin.IRouter) {
 	m.GET("/", ginprom.PromHandler(promhttp.Handler()))
 }
 
-// @Summary Insert coin host
-// @ID insert_coin_host
-// @Description Insert a host for a specific coin
-// @Accept json
-// @Produce json
-// @Tags host
-// @Param Authorization header string false "Bearer Token" default()
-// @Param hosts body redemption.CoinHosts true "Hosts"
-// @Success 200 {object} redemption.Success
-// @Error 500 {object} ginutils.ApiError
-// @Router /v1/hosts [put]
-func insertCoinHosts(storage storage.Host) func(c *gin.Context) {
-	if storage == nil {
-		return nil
-	}
-	return func(c *gin.Context) {
-		var body redemption.CoinHosts
-		if err := c.BindJSON(&body); err != nil {
-			logger.Error(err)
-			ginutils.ErrorResponse(c).Message(err.Error()).Render()
-			return
-		}
-		if len(body) == 0 {
-			ginutils.ErrorResponse(c).Message("invalid payload").Render()
-			return
-		}
-
-		err := storage.InsertHosts(body)
-		if err != nil {
-			logger.Error(err)
-			ginutils.ErrorResponse(c).Message(err.Error()).Render()
-			return
-		}
-		ginutils.RenderSuccess(c, redemption.Success{Status: true})
-	}
-}
-
-// @Summary Get coin host
-// @ID get_coin_host
-// @Description Get a host for a specific coin
-// @Accept json
-// @Produce json
-// @Tags host
-// @Param Authorization header string false "Bearer Token" default()
-// @Success 200 {object} redemption.CoinHosts
-// @Error 500 {object} ginutils.ApiError
-// @Router /v1/hosts [get]
-func getCoinHosts(storage storage.Host) func(c *gin.Context) {
-	if storage == nil {
-		return nil
-	}
-	return func(c *gin.Context) {
-		links, err := storage.GetHosts()
-		if err != nil {
-			logger.Error(err)
-		}
-		ginutils.RenderSuccess(c, links)
-	}
-}
-
 // @Summary Create code for referral
 // @ID create_links
 // @Description Create code and links for referral from a specific asset
@@ -324,15 +264,8 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		semaphore.Acquire()
 		defer semaphore.Release()
 
-		host, err := storage.GetHost(link.Asset.Coin)
-		if err != nil {
-			logger.Error(err)
-			ginutils.RenderSuccess(c, createRedeemErrorResponse("Coin without node. You need to insert a host for this coin node"))
-			return
-		}
-
 		// Get asset platform
-		p, err := platform.GetTxPlatform(link.Asset.Coin, host)
+		p, err := platform.GetPlatform(link.Asset.Coin)
 		if err != nil {
 			logger.Error(err, "Invalid platform API")
 			ginutils.RenderSuccess(c, createRedeemErrorResponse(err.Error()))

@@ -6,6 +6,7 @@ import (
 	"github.com/binance-chain/go-sdk/common/types"
 	"github.com/binance-chain/go-sdk/keys"
 	"github.com/binance-chain/go-sdk/types/msg"
+	"github.com/spf13/viper"
 	"github.com/trustwallet/blockatlas/coin"
 	"github.com/trustwallet/blockatlas/pkg/errors"
 	"github.com/trustwallet/blockatlas/pkg/logger"
@@ -23,10 +24,13 @@ type Platform struct {
 	Address    string
 }
 
-func (p *Platform) Init(provider string) error {
-	types.Network = CurrentNetwork
-	var err error
+func (p *Platform) Init() error {
+	provider := viper.GetString("binance.rpc")
 	mnemonic := config.Configuration.Wallet.Mnemonic
+
+	types.Network = CurrentNetwork
+
+	var err error
 	p.KeyManager, err = keys.NewMnemonicKeyManager(mnemonic)
 	if err != nil || p.KeyManager == nil {
 		return errors.E(err, "unable to create a NewMnemonicKeyManager")
@@ -85,7 +89,7 @@ func (p *Platform) TransferAssets(addresses []string, assets redemption.Assets) 
 		return "", errors.E(err, "failed to send transactions", logParams, logger.Params{"result": sendResult})
 	}
 	logger.Info("txs sent!", logger.Params{"result": sendResult.Hash, "log": sendResult.Log, "Code": sendResult.Code})
-	return sendResult.Hash, nil
+	return sendResult.TxCommitResult.Hash, nil
 }
 
 func (p *Platform) GetPublicAddress() (string, error) {

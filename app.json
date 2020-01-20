@@ -37,8 +37,13 @@
             "description": "Mnemonic seed to referral balance.",
             "required": true
         },
-        "API_AUTH_TOKEN": {
-            "description": "Secret barer token for API.",
+        "DASHBOARD_TOKEN": {
+            "description": "Secret token for Dashboard.",
+            "required": true,
+            "generator": "secret"
+        },
+        "API_TOKEN": {
+            "description": "Secret token for API.",
             "required": true,
             "generator": "secret"
         }
