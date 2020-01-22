@@ -17,8 +17,6 @@ import {
     Create,
     ArrayInput,
     SimpleFormIterator,
-    ReferenceField,
-    ChipField,
     ReferenceInput,
     SelectInput
 } from "react-admin";
@@ -71,9 +69,6 @@ export const LinkList = props => (
             <BooleanField source="asset.used" label="Redeemed?" />
             <TextField source="id" label="code" />
             <DateField source="expiration_date" />
-            <ReferenceField source="asset.coin" reference="hosts">
-                <ChipField source="coin" />
-            </ReferenceField>
             <ArrayField source="asset.assets" label="Value">
                 <SingleFieldList>
                     <AssetField source="token_id" />
