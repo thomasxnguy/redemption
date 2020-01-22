@@ -7,7 +7,7 @@ import (
 	"github.com/trustwallet/blockatlas/pkg/ginutils"
 	"github.com/trustwallet/blockatlas/pkg/logger"
 	"github.com/trustwallet/blockatlas/pkg/metrics"
-	"github.com/trustwallet/blockatlas/util"
+	"github.com/trustwallet/blockatlas/pkg/semaphore"
 	"github.com/trustwallet/redemption/server/internal/code"
 	"github.com/trustwallet/redemption/server/internal/message"
 	"github.com/trustwallet/redemption/server/internal/storage"
@@ -232,7 +232,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 	}
 
 	// avoid race condition with semaphore
-	semaphore := util.NewSemaphore(1)
+	semaphore := semaphore.NewSemaphore(1)
 	return func(c *gin.Context) {
 		var body redemption.Redeem
 		if err := c.BindJSON(&body); err != nil {
@@ -292,8 +292,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		result := make([]string, 0)
 		observers := body.Observers.GetCoinObservers(link.Asset.Coin)
 		for _, observer := range observers {
-			to := append(observer.Addresses, observer.PublicKeys...)
-			hash, err := p.TransferAssets(to, link.Asset)
+			hash, err := p.TransferAssets(observer.Addresses, link.Asset)
 			if err != nil {
 				continue
 			}

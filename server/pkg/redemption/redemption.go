@@ -79,9 +79,8 @@ type Redeem struct {
 }
 
 type Observer struct {
-	Coin       uint     `json:"coin" bson:"coin"`
-	PublicKeys []string `json:"publicKeys,omitempty" bson:"publicKeys,omitempty"`
-	Addresses  []string `json:"addresses,omitempty" bson:"addresses,omitempty"`
+	Coin      uint     `json:"coin" bson:"coin"`
+	Addresses []string `json:"addresses,omitempty" bson:"addresses,omitempty"`
 }
 
 type Observers []Observer
