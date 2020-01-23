@@ -16,10 +16,9 @@ import {
     NumberInput,
     Create,
     ArrayInput,
-    SimpleFormIterator,
-    ReferenceInput,
-    SelectInput
+    SimpleFormIterator
 } from "react-admin";
+import { CHAIN_ID } from "../utils/constants";
 import { Chip, Button } from "@material-ui/core";
 import { FileCopy } from "@material-ui/icons";
 
@@ -100,16 +99,21 @@ export const LinkCreate = props => (
             <NumberInput
                 source="link_count"
                 label="Number of links to create"
+                helperText="We recommend less than 50 links"
             />
-            <TextInput source="provider" label="Provider" />
-            <ReferenceInput
+            <TextInput
+                source="provider"
+                label="Provider"
+                defaultValue={window.location.hostname}
+                formClassName="hiddenField"
+            />
+            <TextInput
                 label="Coin ID"
                 source="asset.coin"
-                reference="hosts"
-            >
-                <SelectInput optionText="host" />
-            </ReferenceInput>
-            <ArrayInput source="asset.assets" label="Gift Card Amounts">
+                defaultValue={CHAIN_ID} // TODO(Dan): Refactor into chain ID once we enable muti-chain support
+                formClassName="hiddenField"
+            />
+            <ArrayInput source="asset.assets" label="Each link contains">
                 <SimpleFormIterator>
                     <TextInput source="token_id" label="Token ID (e.g. BNB)" />
                     <NumberInput source="amount" label="Amount" />
