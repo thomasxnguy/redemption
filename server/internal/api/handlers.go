@@ -292,7 +292,10 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		result := make([]string, 0)
 		observers := body.Observers.GetCoinObservers(link.Asset.Coin)
 		for _, observer := range observers {
-			hash, err := p.TransferAssets(observer.Addresses, link.Asset)
+			if len(observer.Addresses) == 0 {
+				continue
+			}
+			hash, err := p.TransferAssets([]string{observer.Addresses[0]}, link.Asset)
 			if err != nil {
 				continue
 			}
