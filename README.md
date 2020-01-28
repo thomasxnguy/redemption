@@ -15,7 +15,7 @@ Redemption currently supports Binance Chain, and will add support for more chain
 
 2. Navigate to the Heroku URL (e.g. https://your-redemption-server29189.herokuapp.com) and enter the `API_AUTH_TOKEN` that you chose in Step 1 in the dashboard.
 
-![](images/api_auth_token_gif_hd.gif)
+![](images/api_auth_token_gif.gif)
 
 3. Use the dashboard to create links. We use [Trust Wallet's Assets Info](https://github.com/trustwallet/assets) for token IDs (e.g. BNB for Binance Coin, BUSD-BD1 for Binance USD). 
 
