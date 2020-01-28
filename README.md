@@ -1,19 +1,34 @@
 # Redemption Server
 
-> Note: README.md is a work in progress
+This is an open source tool that allows you to generate single-use links that redeem crypto to Trust Wallet. It can be used to run a gift card or promotional airdrop campaign.
 
-This is an open source project for running a crypto gift card or airdrop program.
+Redemption currently supports Binance Chain, and will add support for more chains over time.
 
-Security features will be added in over time, especially private key management.
+> Redemption is beta software, and currently has the bare-minimum of security features. Use at your own risk!
+
+
+## Quick start
+
+1. Deploy this template to Heroku. It should guide you through the setup process, including setting the secret API_AUTH_TOKEN
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/trustwallet/redemption)
+
+2. Navigate to the Heroku URL (e.g. https://your-redemption-server29189.herokuapp.com) and enter the `API_AUTH_TOKEN` that you chose in Step 1 in the dashboard.
+
+![](images/api_auth_token_gif_hd.gif)
+
+3. Use the dashboard to create links. We use [Trust Wallet's Assets Info](https://github.com/trustwallet/assets) for token IDs (e.g. BNB for Binance Coin, BUSD-BD1 for Binance USD). 
+
+![](images/create_links_hd.gif)
+
+4. Use the "links" dashboard to edit and invalidate links where necessary.
 
 ## Features
 
 **Creation**
 
--   [ ] A simple dashboard GUI allows the creation of _n_ one-use redemption codes
--   [ ] Each one-use redemption code is tied to a specified amount of cryptocurrency
+-   [x] A simple dashboard GUI allows the creation of _n_ one-use redemption codes (version 2 is currently underway in branch `antd`)
+-   [x] Each one-use redemption code is tied to a specified amount of cryptocurrency
 
 **Redemption**
 
@@ -24,8 +39,8 @@ Security features will be added in over time, especially private key management.
 
 **Dashboard and Admin**
 
--   [ ] Visual dashboard to track all redemption codes
--   [ ] User can invalidate unclaimed redemption codes from dashboard
+-   [x] Visual dashboard to track all redemption codes
+-   [x] User can invalidate unclaimed redemption codes from dashboard
 
 **Deployment**
 
@@ -34,7 +49,7 @@ Security features will be added in over time, especially private key management.
 
 ## Structure
 
--   [ ] Document use of [react-admin](https://github.com/marmelab/react-admin)
+-   [x] Document use of [react-admin](https://github.com/marmelab/react-admin)
 -   [x] Document go backend API
 
 ## License
