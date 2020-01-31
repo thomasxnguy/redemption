@@ -29,18 +29,19 @@ install: go-get
 
 ## start: Start API in development mode.
 start:
-	@bash -c "$(MAKE) clean compile start-api"
+	@bash -c "$(MAKE) clean compile start-server"
 
 ## stop: Stop development mode.
 stop: stop-server
 
-start-api: stop-server
+start-server: stop-server
 	@echo "  >  Starting $(PROJECT_NAME) API"
 	@-$(GOBIN)/$(PROJECT_NAME) $(API_COMMAND) 2>&1 & echo $$! > $(PID_API)
 	@cat $(PID_API) | sed "/^/s/^/  \>  API PID: /"
 	@echo "  >  Error log: $(STDERR)"
 
 stop-server:
+	@echo "  >  Stoping $(PROJECT_NAME) API"
 	@-touch $(PID_API)
 	@-kill `cat $(PID_API)` 2> /dev/null || true
 	@-rm $(PID_API)
@@ -68,6 +69,15 @@ test: go-test
 
 ## fmt: Run `go fmt` for all go files.
 fmt: go-fmt
+
+## goreleaser: Release the last tag version with GoReleaser.
+goreleaser: go-goreleaser
+
+## govet: Run go vet.
+govet: go-vet
+
+## golint: Run golint.
+golint: go-lint
 
 go-compile: go-get go-build
 
@@ -97,6 +107,18 @@ go-test:
 go-fmt:
 	@echo "  >  Format all go files"
 	GOBIN=$(GOBIN) gofmt -w ${GOFMT_FILES}
+
+go-goreleaser:
+	@echo "  >  Releasing a new version"
+	GOBIN=$(GOBIN) goreleaser --rm-dist
+
+go-vet:
+	@echo "  >  Running go vet"
+	GOBIN=$(GOBIN) go vet ./...
+
+go-lint:
+	@echo "  >  Running golint"
+	GOBIN=$(GOBIN) golint ./...
 
 .PHONY: help
 all: help

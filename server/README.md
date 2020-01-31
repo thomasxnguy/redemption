@@ -12,52 +12,50 @@ Deploy it in less than 30 seconds!
 * [GO](https://golang.org/doc/install) `1.13+`
 * Locally running [Redis](https://redis.io/topics/quickstart) or url to remote instance (required for Observer only)
 
-### From Source 
+### Run
+#### Running Locally
 
 ```shell
-go get -u github.com/trustwallet/redemption/server
-cd $GOPATH/src/github.com/trustwallet/redemption/server
-
-// Make commands
-- install     Install missing dependencies. Runs `go get` internally. e.g; make install get=github.com/foo/bar
-- start       Start API in development mode.
-- stop        Stop development mode.
-- start-api   Start API in development mode.
-- compile     Compile the binary.
-- exec        Run given command. e.g; make exec run="go test ./..."
-- clean       Clean build files. Runs `go clean` internally.
-- test        Run all unit tests.
-- fmt         Run `go fmt` for all go files.
+$ go get -u github.com/trustwallet/redemption/server
+$ cd $GOPATH/src/github.com/trustwallet/redemption/server
+$ make start
 ```
 
-### Environment Variables
-
-All environment variables for developing are set inside the .env file.
-
-### Docker
-
-Build and run from local Dockerfile:
-
-```shell
-docker build -t redeem-heroku .
-docker run -p 8399:8399 -p 3000:8080 -d redeem-heroku
-```
-
-### Tools
-
--   Setup MongoDb
-
-```shell
-brew install mongodb
-```
-
--   Running in the IDE ( GoLand )
+#### Running in the IDE ( GoLand )
 
 1.  Run
 2.  Edit configuration
 3.  New Go build configuration
 4.  Select `directory` as configuration type
 5.  Set `api` as program argument and `-i` as Go tools argument 
+
+
+#### Tools
+
+-   Setup MongoDb
+
+```shell
+brew install mongodb
+``` 
+
+#### Make commands
+```
+- install      Install missing dependencies. Runs `go get` internally. e.g; make install get=github.com/foo/bar
+- start        Start API in development mode.
+- stop         Stop development mode.
+- compile      Compile the binary.
+- exec         Run given command. e.g; make exec run="go test ./..."
+- clean        Clean build files. Runs `go clean` internally.
+- test         Run all unit tests.
+- fmt          Run `go fmt` for all go files.
+- goreleaser   Release the last tag version with GoReleaser.
+- govet        Run go vet.
+- golint       Run golint.
+```
+
+#### Environment Variables
+
+All environment variables for developing are set inside the .env file.
 
 ### Docs
 
