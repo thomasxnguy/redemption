@@ -14,7 +14,7 @@ Redemption currently supports Binance Chain, and will add support for more chain
 
 2. The Heroku going to autogenerate two tokens for you, one to access your dashboard (`DASHBOARD_TOKEN`) and another one to reach the redeem API (`API_TOKEN`). You can get both inside the Heroku environment variables.
 
-![](images/heroku_vars.gif)
+![](images/heroku_vars.png)
 
 3. Navigate to the Heroku URL (e.g. https://your-redemption-server29189.herokuapp.com) and enter the `DASHBOARD_TOKEN` that you chose in Step 1 in the dashboard.
 
