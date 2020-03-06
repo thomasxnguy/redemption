@@ -29,9 +29,10 @@ Redemption currently supports Binance Chain, and will add support for more chain
 
 ## Run Locally
 
-- Clone the repository inside the `GOPATH`: `$GOPATH/src/github.com/trustwallet/redemption`
-- Run: `make install`
-
+```
+docker-compose build
+docker-compose up
+```
 
 ## Supported platforms
 
