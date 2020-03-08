@@ -68,7 +68,7 @@ func (p *Platform) TransferAssets(addresses []string, assets redemption.Assets) 
 		for _, address := range addresses {
 			addr, err := types.GetFromBech32(address, CurrentNetwork.Bech32Prefixes())
 			if err != nil {
-				logger.Error(err, "AccAddressFromBech32 decode failed", logger.Params{"address": address})
+				logger.Info(err, "AccAddressFromBech32 decode failed", logger.Params{"address": address})
 				continue
 			}
 			transfers = append(transfers, msg.Transfer{

@@ -36,7 +36,9 @@ func GetPlatform(coin uint) (redemption.TxApi, error) {
 	}
 	err := p.Init()
 	if err != nil {
-		return nil, errors.E(err, "failed to initialize platform API", errors.Params{"coin": coin})
+		retErr := errors.E(err, "failed to initialize platform API", errors.Params{"coin": coin})
+		logger.Error(retErr)
+		return nil, retErr
 	}
 	return p, nil
 }

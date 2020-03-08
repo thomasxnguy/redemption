@@ -248,7 +248,6 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		// Get the code from database
 		link, err := storage.GetLink(body.Code)
 		if err != nil {
-			logger.Error(err)
 			ginutils.RenderSuccess(c, createRedeemErrorResponse("Invalid code"))
 			return
 		}
@@ -267,7 +266,6 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		// Get asset platform
 		p, err := platform.GetPlatform(link.Asset.Coin)
 		if err != nil {
-			logger.Error(err, "Invalid platform API")
 			ginutils.RenderSuccess(c, createRedeemErrorResponse(err.Error()))
 			return
 		}
@@ -277,8 +275,8 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		link.Valid = false
 		err = storage.UpdateLink(link)
 		if err != nil {
-			logger.Error(err)
-			ginutils.RenderSuccess(c, createRedeemErrorResponse("CCannot invalidate code"))
+			logger.Error("Cannot update link before redemption", err)
+			ginutils.RenderSuccess(c, createRedeemErrorResponse("Cannot invalidate code"))
 			return
 		}
 
@@ -297,6 +295,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 			}
 			hash, err := p.TransferAssets([]string{observer.Addresses[0]}, link.Asset)
 			if err != nil {
+				logger.Error(err)
 				continue
 			}
 			result = append(result, hash)
@@ -308,7 +307,7 @@ func redeemCode(storage storage.Redeem) func(c *gin.Context) {
 		// Save assets state
 		err = storage.UpdateLink(link)
 		if err != nil {
-			logger.Error(err)
+			logger.Error("Cannot update link after redemption", err)
 			return
 		}
 	}
